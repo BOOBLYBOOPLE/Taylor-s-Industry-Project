@@ -1,0 +1,88 @@
+<!-- <mat-grid-list cols="4" rowHeight="4:1">
+  <mat-grid-tile>Attendance: something
+    view full list
+  </mat-grid-tile>
+  <mat-grid-tile>Absent: something
+    view full list
+  </mat-grid-tile>
+  <mat-grid-tile>Upcoming Event: something</mat-grid-tile>
+  <mat-grid-tile>Next something: something</mat-grid-tile>
+</mat-grid-list>
+
+<mat-card class="table-card">
+      <mat-card class=" card-container card table-card">
+        <div class="d-inline-flex">
+          <div class="spacer-margin-left">
+            <mat-form-field appearance="outline">
+              <mat-label>search</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <button class="ms-2 button-3" routerLink="leave-form" ><i class="fa fa-add"></i></button>
+            <button class="ms-2 button-3"><i class="fa fa-filter"></i></button>
+          </div>
+          <div class="spacer-margin-right">
+            <mat-form-field appearance="outline">
+              <mat-label>Chose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM-DD-YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-margin">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
+            <td mat-cell class="tbl-content" *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef> Department </th>
+            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="leaveType">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateStart">
+            <th mat-header-cell *matHeaderCellDef> Date Start </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateStart}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateEnd">
+            <th mat-header-cell *matHeaderCellDef> Date End </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateEnd}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
+                <mat-menu #menu="matMenu">
+                  <button class="md-button" mat-menu-item><span>View</span></button>
+                  <mat-divider></mat-divider>
+                  <button class="md-button" mat-menu-item><span>Approve</span></button>
+                </mat-menu>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card> -->
+<!-- </mat-card> -->
+<mat-card class="card-container card card-center">
+    <mat-calendar class=" col-1 inline-calendar-card"></mat-calendar>
+</mat-card>

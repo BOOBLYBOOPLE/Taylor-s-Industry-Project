@@ -1,0 +1,55 @@
+<body class="body-padding">
+  <div class="container">
+  <mat-card class="card card-body" appearance="outlined">
+      <h1 class="mt-4 ms-4 me-4 mb-3">Add Payroll</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="payrollForm">
+
+      <div class="ms-2 me-2">
+        <div class="ms-4 me-4 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Select Employee</mat-label>
+            <mat-select formControlName="employeeId" (selectionChange)="onEmployeeSelect($event)">
+              <mat-option *ngFor="let employee of employees" [value]="employee._id" class="md-button">{{employee.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-hint>MM-DD-YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Amount Earned</label>
+          <input formControlName="amount" class="form-control" type="text">
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <mat-label>Hours Worked</mat-label>
+          <input formControlName="hoursWorked" class="form-control" type="text">
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <mat-label>Deductions</mat-label>
+          <input formControlName="deductions" class="form-control" type="text">
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <mat-label>Bonuses</mat-label>
+          <input formControlName="bonuses" class="form-control" type="text">
+        </div>
+
+        <div  class="ms-4 me-4 mb-3">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button class="btn btn-close-white" (click)="goBack()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  </div>
+</body>

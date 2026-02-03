@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <h1 class="mb-3 ms-2">Settings</h1>
+
+  <mat-tab-group animationDuration="0ms" class="ms-2 me-2">
+
+    <mat-tab label="General">
+      <div class="p-4">
+
+        <mat-card appearance="outlined" class="mb-4">
+          <mat-card-header>
+            <mat-card-title>Appearance</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="d-flex flex-column gap-3 mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Dark Theme</span>
+              <mat-slide-toggle [(ngModel)]="settings.darkMode" (change)="toggleTheme()">
+              </mat-slide-toggle>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Compact Tables (Dense Mode)</span>
+              <mat-slide-toggle [(ngModel)]="settings.compactMode"></mat-slide-toggle>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>Notifications</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="d-flex flex-column gap-3 mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Email on Leave Approval</span>
+              <mat-slide-toggle [(ngModel)]="settings.emailNotifications"></mat-slide-toggle>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Monthly Payroll Summary</span>
+              <mat-slide-toggle [(ngModel)]="settings.payrollAlerts"></mat-slide-toggle>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-raised-button color="primary" (click)="saveSettings()">Save Preferences</button>
+          </mat-card-actions>
+        </mat-card> -->
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Security">
+      <div class="p-4">
+        <mat-card appearance="outlined" class="card-center" style="max-width: 600px;">
+          <mat-card-header>
+            <mat-card-title>Change Password</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="mt-3">
+            <form>
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Current Password</mat-label>
+                <input matInput [(ngModel)]="passwordData.currentPassword" name="currentPassword" [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>New Password</mat-label>
+                <input matInput [(ngModel)]="passwordData.newPassword" name="newPassword" [type]="hide1 ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide1 = !hide1"
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Confirm New Password</mat-label>
+                <input matInput [(ngModel)]="passwordData.confirmPassword" name="confirmPassword" [type]="hide2 ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide2 = !hide2"
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+            </form>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button>Cancel</button>
+            <button mat-raised-button (click)="updatePassword()" color="warn">Update Password</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,130 @@
+<mat-sidenav-container class="sidebar-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-toolbar class="sidebar-header">
+      <span class="col-10">Menu</span>
+      <button (click)="openInfo()" matTooltip="About App" mat-icon-button>
+        <mat-icon >info</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="sidebar-subheader">
+      <button class="md-fab">
+        <img src="../assets/pics/default_profile.png" alt="icon">
+      </button>
+    </div>
+
+    <mat-nav-list style="padding:0px;" class="sidebar-sidenav-content">
+      <mat-divider class="md-divider"></mat-divider>
+      <button class="md-button" mat-list-item routerLink="/home" (click)="changeTitle(displayedColumns.home)">
+        <i class="fa fa-home"></i>
+        <span>{{displayedColumns.home}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button class="md-button" mat-list-item routerLink="/employee" (click)="changeTitle(displayedColumns.employee)">
+        <i class="fa fa-users"></i>
+        <span>{{displayedColumns.employee}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <mat-expansion-panel *ngIf="isAdmin" (opened)="payrollPanelOpenState = true"
+                          (closed)="payrollPanelOpenState = false">
+        <mat-expansion-panel-header class="md-expansion">
+          <mat-panel-title>
+            <i class="me-2 fa fa-money-bill-1"></i>
+            <span>{{displayedColumns.paynfin}}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button class="md-button" mat-list-item routerLink="/payroll" (click)="changeTitle(displayedColumns.payroll)">
+          <i class="fa fa-credit-card"></i>
+          <span>{{displayedColumns.payroll}}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="md-button" mat-list-item routerLink="/finance" (click)="changeTitle(displayedColumns.finance)">
+          <i class="fa fa-money-bill-1"></i>
+          <span>{{displayedColumns.finance}}</span>
+        </button>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <mat-expansion-panel (opened)="calendarPanelOpenState = true"
+                    (closed)="calendarPanelOpenState = false">
+        <mat-expansion-panel-header class="md-expansion">
+          <mat-panel-title>
+            <i class="me-2 fa fa-calendar"></i>
+            <span>{{displayedColumns.timetable}}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button *ngIf="isAdmin" class="md-button" mat-list-item routerLink="/attendance" (click)="changeTitle(displayedColumns.attendance)">
+          <i class="fa fa-check"></i>
+          <span>{{displayedColumns.attendance}}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/leaves" (click)="changeTitle(displayedColumns.leaves)">
+          <i class="fa fa-plane"></i>
+          <span>{{displayedColumns.leaves}}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="md-button" mat-list-item routerLink="/calendar" (click)="changeTitle(displayedColumns.calendar)">
+          <i class="fa fa-calendar"></i>
+          <span>{{displayedColumns.calendar}}</span>
+        </button>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/recruitment" (click)="changeTitle(displayedColumns.recruit)">
+        <i class="fa fa-id-card"></i>
+        <span>{{displayedColumns.recruit}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <mat-expansion-panel (opened)="calendarPanelOpenState = true"
+                    (closed)="calendarPanelOpenState = false">
+        <mat-expansion-panel-header class="md-expansion">
+          <mat-panel-title>
+           <i class="me-2 fa fa-clipboard"></i>
+           <span>{{displayedColumns.eva}}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/complaints" (click)="changeTitle(displayedColumns.complaints)">
+          <i class="fa fa-flag"></i>
+          <span>{{displayedColumns.complaints}}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/analytics" (click)="changeTitle(displayedColumns.analytics)">
+          <i class="fa fa-line-chart"></i>
+          <span>{{displayedColumns.analytics}}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="md-button" mat-list-item routerLink="/forms" (click)="changeTitle(displayedColumns.reports)">
+          <i class="fa fa-clipboard"></i>
+          <span>{{displayedColumns.reports}}</span>
+        </button>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <button class="md-button" mat-list-item routerLink="/settings" (click)="changeTitle(displayedColumns.settings)">
+        <i class="fa fa-gear"></i>
+        <span>{{displayedColumns.settings}}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <!-- <button class="md-button" mat-list-item routerLink="/debug">
+        <i class="fa fa-desktop"></i>
+        <span>  DebugPage</span>
+      </button> -->
+      <mat-divider></mat-divider>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content style="margin: 0px;">
+    <mat-toolbar class="toolbar">
+      <button matTooltip="Toggle Sidebar" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon >menu</mat-icon>
+      </button>
+        <span>{{titleDisplay}}</span>
+      <span class="spacer"></span>
+      <button (click)="openReport()" [matTooltip]="'Report Bugs'" mat-icon-button>
+        <mat-icon>report</mat-icon>
+      </button>
+      <button matTooltip="Logout" mat-icon-button routerLink="/">
+        <mat-icon >logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

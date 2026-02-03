@@ -1,0 +1,61 @@
+<mat-card class="table-card">
+<div>
+    <h1>Inbox</h1>
+</div>
+  <div>
+  <mat-form-field class="mat-input-element" appearance="outline">
+    <mat-label>
+      Search
+    </mat-label>
+  <input matInput>
+  </mat-form-field>
+    <button mat-icon-button class="ms-2"><mat-icon>more_vert</mat-icon></button>
+    <button class="ms-2 button-3"><i class="fa fa-filter"></i></button>
+    <button class="ms-2 button-3"><i class="fa fa-refresh"></i></button>
+</div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-margin">
+    <ng-container matColumnDef="position">
+      <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
+      <td mat-cell class="tbl-content" *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="from">
+      <th mat-header-cell *matHeaderCellDef> From </th>
+      <td mat-cell *matCellDef="let element"> {{element.from}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="to">
+      <th mat-header-cell *matHeaderCellDef> To </th>
+      <td mat-cell *matCellDef="let element"> {{element.to}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="subject">
+      <th mat-header-cell *matHeaderCellDef> Subject </th>
+      <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
+          <mat-menu #menu="matMenu">
+            <button class="md-button" mat-menu-item><span>View</span></button>
+            <mat-divider></mat-divider>
+            <button class="md-button" mat-menu-item><span>Edit</span></button>
+            <mat-divider></mat-divider>
+            <button class="md-button" mat-menu-item><span>Report</span></button>
+          </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>

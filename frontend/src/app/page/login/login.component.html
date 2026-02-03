@@ -1,0 +1,46 @@
+<mat-sidenav-container>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      <span class="spacer"></span>
+      <button (click)="openReport()" matTooltip="Report Bugs" mat-icon-button>
+        <mat-icon>report</mat-icon>
+      </button>
+      <button (click)="openInfo()" matTooltip="About App" mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-card class="card card-login card-center">
+      <mat-card-header style="font-weight: bold;">
+        UPeople Login
+      </mat-card-header>
+      <img class="md-fab-login mt-3" src="../../../assets/pics/default_profile.png">
+      <form [formGroup]="form">
+        <mat-form-field class="mt-3" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="name" formControlName="username">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+      </form>
+
+      <a><label routerLink="register" class="cursor-link">Register</label></a>
+      <a><label (click)="openForgot()" class="mb-2 cursor-link">Forgot password?</label></a>
+      <button class="button-content" style="width: 6rem;" (click)="onSubmit()">
+        Login
+      </button>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,52 @@
+<body class="body-padding">
+  <div class="container" *ngIf="complaint;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="mt-4">Complaint Details</h1>
+    </div>
+
+    <mat-card class="card p-4" appearance="outlined">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <label class="fw-bold text-muted">Reporter:</label>
+          <p class="fs-5">{{ complaint.employeeId?.name || 'Unknown' }}</p>
+        </div>
+
+        <div class="col-md-6">
+          <label class="fw-bold text-muted">Targeted Employee:</label>
+          <p class="fs-5">{{ complaint.targetedEmployee?.name || 'N/A' }}</p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <label class="fw-bold text-muted">Date of Incident:</label>
+          <p>{{ complaint.date | date:'mediumDate' }}</p>
+        </div>
+
+        <div class="col-md-4">
+          <label class="fw-bold text-muted">Type:</label>
+          <p>{{ complaint.type }}</p>
+        </div>
+
+        <div class="col-md-4">
+          <label class="fw-bold text-muted">Summary:</label>
+          <p>{{ complaint.summary }}</p>
+        </div>
+      </div>
+
+      <mat-divider class="mb-4"></mat-divider>
+
+      <div>
+        <label class="fw-bold text-muted mb-2">Description:</label>
+        <div class="border rounded p-3 bg-light" [innerHTML]="complaint.content"></div>
+      </div>
+    </mat-card>
+    <div class=" mt-4 d-flex align-items-center gap-2">
+      <button class="button-content" (click)="goBack()">Back</button>
+      <button *ngIf="!complaint.resolved" class="button-content" (click)="markAsResolved()">
+        <mat-icon>check</mat-icon>Resolve
+      </button>
+    </div>
+
+  </div>
+</body>

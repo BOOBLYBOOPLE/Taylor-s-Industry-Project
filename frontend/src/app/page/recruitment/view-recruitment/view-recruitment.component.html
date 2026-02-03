@@ -1,0 +1,49 @@
+<body class="body-padding">
+  <div class="container" *ngIf="data">
+    <mat-card class="card p-4" appearance="outlined">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mt-4">Applicant Details</h1>
+      </div>
+      <mat-card-header class="mb-4">
+        <mat-card-title>Name: {{ data.name }}</mat-card-title>
+        <mat-card-subtitle>Status: {{ data.status }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <label class="fw-bold text-muted"><strong>Enrolled University:</strong></label>
+          <p class="fs-5">{{ data.University }}</p>
+        </div>
+        <div class="col-md-4">
+          <label class="fw-bold text-muted"><strong>Age:</strong></label>
+          <p class="fs-5">{{ data.age }}</p>
+        </div>
+        <div class="col-md-4">
+          <label class="fw-bold text-muted"><strong>Date Applied</strong></label>
+          <p class="fs-5">{{ data.date | date }}</p>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row mt-2 mb-4">
+        <label class="fw-bold text-muted mb-2">About Candidate</label>
+        <div class="border rounded p-3 bg-light" [innerHTML]="data.description"></div>
+      </div>
+
+      <div class="row mt-2 mb-4">
+        <label class="fw-bold text-muted mb-2">Job Experience</label>
+        <div class="border rounded p-3 bg-light" [innerHTML]="data.exp"></div>
+      </div>
+
+      <mat-card-actions>
+        <a *ngIf="data.resume" [href]="data.resume" target="_blank" mat-raised-button color="primary">
+          Download Resume
+        </a>
+        <button *ngIf="!data.resume" mat-button disabled>No Resume Available</button>
+
+        <button mat-button class="ms-2" routerLink="/recruitment">Back</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</body>

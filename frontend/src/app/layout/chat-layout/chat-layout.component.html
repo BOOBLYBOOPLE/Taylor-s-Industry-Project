@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidebar-container">
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-toolbar class="sidebar-header">
+      <button style="margin-left: 0px;" mat-icon-button routerLink="/home" matTooltip="go back to main page">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list class="sidebar-sidenav-content card-center">
+      <!-- <button class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">
+      <i class="fa fa-plus-circle"></i>Compose</button> -->
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      <span class="spacer"></span>
+      <button mat-icon-button>
+        <mat-icon>report</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div><app-chat></app-chat></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

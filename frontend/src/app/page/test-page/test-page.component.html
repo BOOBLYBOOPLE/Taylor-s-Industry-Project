@@ -1,0 +1,105 @@
+<p>test-page works!</p>
+<mat-accordion>
+    <mat-form-field>
+      <mat-label>Chose a date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM-DD-YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Cars</mat-label>
+    <mat-select>
+      <mat-option value="yoooo" class="md-button">OH OH OH OH</mat-option>
+      <mat-option value="mkmkmkk" class="md-button">III WANNA DANCE WIT SOMEBADEH</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        This is the expansion title
+      </mat-panel-title>
+      <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>This is the primary content of the panel.</p>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Self aware panel
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-tab-group class="mat-tab-header">
+  <mat-tab label="UNO">
+    <mat-card class="table-card">
+      <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-margin">
+        <ng-container matColumnDef="position">
+          <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
+          <td mat-cell class="tbl-content" *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef> Department </th>
+          <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Position </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
+              <mat-menu #menu="matMenu">
+                <button class="md-button" mat-menu-item><span>help</span></button>
+                <mat-divider></mat-divider>
+                <button class="md-button" mat-menu-item><span>me</span></button>
+              </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <cdk-virtual-scroll-viewport itemSize="50" class="scroll-view">
+        <div *cdkVirtualFor="let item of items" class="scroll-item">
+          {{item}}
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="DOS"></mat-tab>
+  <mat-tab label="TRES"></mat-tab>
+</mat-tab-group>
+
+<mat-card>
+</mat-card>
+  <quill-editor [modules]="quillConfig" [styles]="{'min-height': '200px'}"></quill-editor>
+
+<mat-slide-toggle>feffefwmm</mat-slide-toggle>
+<button class="button-content" (click)="openDialog()">openDialog</button>
+<mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>

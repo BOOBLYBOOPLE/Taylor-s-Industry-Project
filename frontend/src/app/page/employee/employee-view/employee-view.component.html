@@ -1,0 +1,126 @@
+<body class="body-padding">
+  <div class="ms-3 me-3">
+    <mat-card class="p-4 card card-body" appearance="outlined">
+        <div class="container">
+    <div class="d-flex justify-content-between mb-3">
+      <h1 class="mt-4">Employee View</h1>
+    </div>
+  </div>
+        <mat-card-header class="card-center">
+          <img src="../../../../assets//pics/bubble.jpg" class="headshot md-fab-employee" alt="">
+        </mat-card-header>
+        <div>
+          <p class="fs-1 text-center">{{name}}</p>
+          <p class="mt-2 fs-3 text-center">{{email}}</p>
+          <p class="mt-2 fs-3 text-center">{{phone}}</p>
+
+          <div class="mt-4">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Title</label>
+                <p class="fs-5">{{ title }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Department</label>
+                <p class="fs-5">{{ department }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Date of Birth</label>
+                <p class="fs-5">{{ DOB | date:'mediumDate'}}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Date of Entry</label>
+                <p class="fs-5">{{ dateOfEntry | date: 'mediumDate'}}</p>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Salary</label>
+                <p class="fs-5">{{ salary }}</p>
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold text-muted">Working Hours</label>
+                <p class="fs-5">{{ workingHours }}</p>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="mb-3 mt-2 ms-4 me-4">
+              <label class="fw-bold text-muted mb-2">Description</label>
+              <div class="border rounded p-3 bg-light" [innerHTML]="about"></div>
+            </div>
+            <button class="ms-2 mt-2 button-content" (click)="goBack()">revert</button>
+          </div>
+        </div>
+    </mat-card>
+  </div>
+
+<!--
+
+      <mat-grid-list cols="2" rowHeight="4:1">
+        <div class="justify-content-start">
+          <mat-grid-tile >
+            <mat-card-content class="text-center card-secondary">
+              <h4 class="mx-0 mb-0">{{position}}</h4>
+              <h4 class="mx-0 mb-0">{{department}}</h4>
+            </mat-card-content>
+          </mat-grid-tile>
+          <mat-grid-tile>
+          <mat-card-content class="text-center card-secondary">
+            <h4 class="mx-0 mb-0">{{position}}</h4>
+            <h4 class="mx-0 mb-0">{{department}}</h4>
+          </mat-card-content>
+          </mat-grid-tile>
+        </div>
+        <div class="justify-content-start">
+          <mat-grid-tile >
+            <mat-card-content class="text-center card-secondary">
+              <h4 class="mx-0 mb-0">{{position}}</h4>
+              <h4 class="mx-0 mb-0">{{department}}</h4>
+            </mat-card-content>
+          </mat-grid-tile>
+          <mat-grid-tile>
+          <mat-card-content class="text-center card-secondary">
+            <h4 class="mx-0 mb-0">{{position}}</h4>
+            <h4 class="mx-0 mb-0">{{department}}</h4>
+          </mat-card-content>
+          </mat-grid-tile>
+        </div>
+      </mat-grid-list>
+    </div>
+
+    <div>
+      <mat-card>
+        something here
+      </mat-card>
+    </div>
+
+    <mat-grid-list cols="4" rowHeight="4:1">
+      <div class="d-flex inline" style="justify-items: start;">
+        <mat-card-content class="text-center card-secondary">
+          <h4 class="mx-0 mb-0">{{position}}</h4>
+          <h4 class="mx-0 mb-0">{{department}}</h4>
+        </mat-card-content>
+        <mat-card-content class="text-center card-secondary">
+          <h4 class="mx-0 mb-0">{{position}}</h4>
+          <h4 class="mx-0 mb-0">{{department}}</h4>
+        </mat-card-content>
+        <mat-card-content class="text-center card-secondary">
+          <h4 class="mx-0 mb-0">{{position}}</h4>
+          <h4 class="mx-0 mb-0">{{department}}</h4>
+        </mat-card-content>
+        <mat-card-content class="text-center card-secondary">
+          <h4 class="mx-0 mb-0">{{position}}</h4>
+          <h4 class="mx-0 mb-0">{{department}}</h4>
+        </mat-card-content>
+      </div>
+    </mat-grid-list>
+  </mat-card>
+
+  </div> -->
+</body>

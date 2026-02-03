@@ -1,0 +1,134 @@
+<body class="body-padding">
+  <div class="container">
+    <mat-card class="card card-body" appearance="outlined">
+      <h1 class="mt-4 ms-4 me-4 mb-3">{{ isEditMode ? 'Update' : 'Submit' }} Leave Application</h1>
+      <form [formGroup]="leavesForm" (ngSubmit)="onSubmit()">
+        <div class="ms-2 me-2">
+
+          <div class="ms-4 me-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Select Employee</mat-label>
+              <mat-select formControlName="employeeId" (selectionChange)="onEmployeeSelect($event)">
+                <mat-option *ngFor="let employee of employees" [value]="employee._id" class="md-button">
+                  {{employee.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="ms-4 me-4 mb-3">
+             <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Leave Duration</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="dateStart" placeholder="Start Date">
+                <input matEndDate formControlName="dateEnd" placeholder="End Date">
+              </mat-date-range-input>
+              <mat-hint>DD-MM-YYYY - DD-MM-YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+
+          <div class="ms-4 me-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Type</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let type of leavesTypes" [value]="type" class="md-button">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="ms-4 me-4 mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let status of status" [value]="status" class="md-button">
+                  {{status}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="ms-4 me-4 mb-3">
+            <input type="checkbox" formControlName="paid">  Paid Leave?
+          </div>
+
+          <div class="ms-4 me-4 mb-3">
+            <label class="d-block">Description (Optional)</label>
+            <quill-editor formControlName="content" [modules]="quillConfig" [styles]="quillStyle"></quill-editor>
+          </div>
+
+          <div class="ms-4 me-4 d-flex justify-content-start gap-2 mb-3">
+            <button class="btn btn-success" type="submit">{{ isEditMode ? 'Update' : 'Submit' }}</button>
+            <button class="btn btn-light" (click)="goBack()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</body>
+
+<!-- <h1 class="mt-2 ms-2">{{ isEditMode ? 'Update' : 'Submit' }} Leave Application</h1>
+<mat-card class="card" appearance="outlined">
+  <form [formGroup]="leavesForm" (ngSubmit)="onSubmit()">
+      <div class="ms-4 two-column-grid" style="gap: 0px;">
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Select Employee</mat-label>
+            <mat-select formControlName="employeeId" (selectionChange)="onEmployeeSelect($event)">
+              <mat-option *ngFor="let employee of employees" [value]="employee._id" class="md-button">
+                {{employee.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Leave Duration</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate formControlName="dateStart" placeholder="Start Date">
+              <input matEndDate formControlName="dateEnd" placeholder="End Date">
+            </mat-date-range-input>
+            <mat-hint>DD-MM-YYYY - DD-MM-YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+    <div class="ms-4 two-column-grid">
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let type of leavesTypes" [value]="type" class="md-button">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of status" [value]="status" class="md-button">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <input type="checkbox" formControlName="paid">paid leave?
+      </div>
+    </div>
+      <div class="ms-4 me-4 mb-3">
+        <label class="d-block">Description (Optional)</label>
+        <quill-editor formControlName="content" [modules]="quillConfig" [styles]="quillStyle"></quill-editor>
+      </div>
+      <div class="ms-4 me-4 d-flex justify-content-start gap-2 mb-3">
+        <button class="btn btn-success" type="submit">{{ isEditMode ? 'Update' : 'Submit' }}</button>
+        <button class="btn btn-light" (click)="goBack()">Cancel</button>
+      </div>
+  </form>
+</mat-card> -->

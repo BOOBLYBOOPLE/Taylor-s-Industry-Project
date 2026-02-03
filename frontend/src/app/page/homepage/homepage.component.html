@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <mat-grid-list cols="2" rowHeight="4:1" gutterSize="16px">
+    <mat-grid-tile>
+      <mat-card class="dashboard-card" routerLink="/employee" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-blue">people</mat-icon>
+          <div class="text-content">
+            <h3>Employees</h3>
+            <p>Manage staff & profiles</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="isAdmin">
+      <mat-card class="dashboard-card" routerLink="/leaves" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-orange">event_note</mat-icon>
+          <div class="text-content">
+            <h3>Leaves</h3>
+            <p>Requests & Approvals</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="isAdmin">
+      <mat-card class="dashboard-card" routerLink="/finance" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-green">attach_money</mat-icon>
+          <div class="text-content">
+            <h3>Finance</h3>
+            <p>Payroll & Claims</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="isAdmin">
+      <mat-card class="dashboard-card" routerLink="/recruitment" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-purple">work</mat-icon>
+          <div class="text-content">
+            <h3>Recruitment</h3>
+            <p>Candidates & Jobs</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngIf="isAdmin">
+      <mat-card class="dashboard-card" routerLink="/complaints" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-red">report_problem</mat-icon>
+          <div class="text-content">
+            <h3>Complaints</h3>
+            <p>Resolve Issues</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="dashboard-card" routerLink="/forms" matRipple>
+        <div class="card-content">
+          <mat-icon class="card-icon color-grey">description</mat-icon>
+          <div class="text-content">
+            <h3>Documents</h3>
+            <p>Forms & Policies</p>
+          </div>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>

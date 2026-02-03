@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Report a Bug</h2>
+
+<div mat-dialog-content class="d-flex flex-column gap-3" style="min-width: 400px;">
+
+  <div class="mt-4">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Your Email (Optional)</mat-label>
+      <input matInput [(ngModel)]="bugData.email" placeholder="user@example.com">
+    </mat-form-field>
+  </div>
+
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Issue Type</mat-label>
+    <mat-select [(ngModel)]="bugData.type">
+      <mat-option *ngFor="let type of bugTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="bugData.description" rows="4"
+              placeholder="Please describe what happened..."></textarea>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+
+  <button mat-raised-button color="warn" (click)="onSubmit()"
+          [disabled]="isLoading || !bugData.description">
+    Submit Report
+  </button>
+</div>

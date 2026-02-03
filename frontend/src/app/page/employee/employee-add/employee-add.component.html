@@ -1,0 +1,76 @@
+<body class="body-padding">
+  <div class="ms-2 me-2">
+  <mat-card class="card card-body card-center" appearance="outlined">
+    <h1 class="mt-4 ms-4 me-4 mb-3">Update Employee Entry</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="employeeAddForm">
+      <div class="ms-2 me-2">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dobpicker" formControlName="DOB">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dobpicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobpicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Date of Joining Company</mat-label>
+              <input matInput [matDatepicker]="entryPicker" formControlName="dateOfEntry">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="entryPicker"></mat-datepicker-toggle>
+              <mat-datepicker #entryPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control" required>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Department</label>
+          <input type="text" formControlName="department" class="form-control" required>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Title</label>
+          <input type="text" formControlName="title" class="form-control" required>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Email</label>
+          <input type="text" formControlName="email" class="form-control">
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Phone Number</label>
+          <input type="text" formControlName="phone" class="form-control">
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Salary</label>
+          <input type="text" formControlName="salary" class="form-control" required>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>Working Hours</label>
+          <input type="text" formControlName="workingHours" class="form-control" required>
+        </div>
+
+        <div class="ms-4 me-4 mb-3">
+          <label>About Employee</label>
+          <quill-editor formControlName="about" [modules]="quillConfig" [styles]="quillStyle"></quill-editor>
+        </div>
+      </div>
+
+      <div class="ms-4 me-4 mb-3">
+        <button class="btn btn-success" type="submit">Submit</button>
+        <button class="ms-2 btn btn-close-white" (click)="goBack()">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+  </div>
+</body>
