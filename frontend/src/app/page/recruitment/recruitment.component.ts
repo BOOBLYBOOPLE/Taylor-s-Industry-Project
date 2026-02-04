@@ -4,6 +4,7 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { recruitmentDataModel } from 'src/assets/shared/data.model';
 
 export interface RecruitmentLog {
   _id: string;
@@ -23,7 +24,7 @@ export class RecruitmentComponent implements OnInit {
   private apiUrl = globalEnv.apiUrl + '/recruitment';
 
   displayedColumns: string[] = ['position', 'name', 'age', 'University_enrolled', 'date', 'status', 'resume', 'actions'];
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<recruitmentDataModel[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -35,27 +36,19 @@ export class RecruitmentComponent implements OnInit {
   }
 
   getAllRecruitments() {
-    this.web.webServiceRetrieve<any[]>(this.apiUrl).subscribe((data: any) => {
-
-      const formattedData = data.map((item: any) => ({
-        ...item
-      }));
-
-      this.dataSource = new MatTableDataSource(formattedData);
-
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        const searchString = filter.toLowerCase();
-        const name = data.name?.toLowerCase() || '';
-        return name.includes(searchString);
-      };
+    this.web.webServiceRetrieve<any[]>(this.apiUrl).subscribe({
+        next: (data) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('Recruitment loaded:', data);
+        },
+        error: (err) => console.error('Error loading recruitment:', err)
     });
   }
 
    onDelete(element: any) {
-    const id = element._id; // Ensure your model has _id
+    const id = element._id;
     if (confirm(`Are you sure you want to delete ${element.name}?`)) {
       this.web.webServiceDelete(`${this.apiUrl}/${id}`, {}).subscribe({
         next: () => {

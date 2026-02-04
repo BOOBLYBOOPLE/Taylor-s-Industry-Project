@@ -25,8 +25,8 @@
               <h1 class="ms-2">Complaints List</h1>
           <table mat-table [dataSource]="dataSource" class="table-margin">
             <ng-container matColumnDef="position">
-              <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
-              <td mat-cell class="tbl-content" *matCellDef="let element"> {{element.position}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="tbl-header"> No. </th>
+          <td mat-cell class="tbl-content" *matCellDef="let element; let i = index"> {{i + 1}} </td>
             </ng-container>
 
             <ng-container matColumnDef="name">

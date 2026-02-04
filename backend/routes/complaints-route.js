@@ -3,7 +3,6 @@ const router = express.Router();
 const Complaints = require('../schema/complaints'); 
 require('../schema/employee');
 
-
 router.get('/', async (req, res) => {
   try {
     const complaints = await Complaints.find().populate('employeeId'); 

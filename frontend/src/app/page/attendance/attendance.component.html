@@ -7,12 +7,12 @@
     <mat-grid-list cols="4" rowHeight="4:1">
       <mat-grid-tile class="card-container">
         <mat-card class="card card-body card-center">
-          Attendance: 5 attending
+          Attendance: {{present }} attending
         </mat-card>
       </mat-grid-tile>
       <mat-grid-tile class="card-container">
         <mat-card class="card card-body card-center">
-        Absent: 1 on leave
+        Absent: {{absent }} on leave
         </mat-card>
       </mat-grid-tile>
       <mat-grid-tile class="card-container">
@@ -30,61 +30,58 @@
 
  <div class="ms-2 me-2 ">
   <mat-card class="card card-body">
-        <h2 class="ms-2">Leaves</h2>
+  <h2 class="ms-2">Attendance</h2>
   <div class="ms-2 me-2">
     <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="position">
           <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
-          <td mat-cell class="tbl-content" *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell class="tbl-content" *matCellDef="let element; let i = index"> {{i + 1}} </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.employeeId?.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="department">
           <th mat-header-cell *matHeaderCellDef> Department </th>
-          <td mat-cell *matCellDef="let element"> {{element.employeeId?.department}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="leaveType">
-          <th mat-header-cell *matHeaderCellDef> Type </th>
-          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="dateStart">
-          <th mat-header-cell *matHeaderCellDef> Date Start </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateStart | date: 'mediumDate'}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="dateEnd">
-          <th mat-header-cell *matHeaderCellDef> Date End </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateEnd | date: 'mediumDate'}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.department}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.status}}
+            <mat-icon *ngIf="element.status === 'Present'"
+              style="font-size: 16px; color: green; vertical-align: middle;"
+              matTooltip="Approved">
+              check_circle
+            </mat-icon>
+
+            <mat-icon *ngIf="element.status === 'Awaiting'"
+                      style="font-size: 16px; color: orange; vertical-align: middle;"
+                      matTooltip="Pending Approval">
+              hourglass_empty
+            </mat-icon>
+
+            <mat-icon *ngIf="element.status === 'Absent'"
+                      style="font-size: 16px; color: red; vertical-align: middle;"
+                      matTooltip="Rejected">
+                      cancel
+            </mat-icon>
+          </td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="actions">
+        <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
             <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
               <mat-menu #menu="matMenu">
-                <button class="md-button" [routerLink]="['/leaves/view', element._id]" mat-menu-item><span>View</span></button>
+                <button class="md-button" (click)="updateStatus(element, 'Present')" mat-menu-item><span>Present</span></button>
                 <mat-divider></mat-divider>
-                <button class="md-button" [routerLink]="['/leaves/create', element._id]" mat-menu-item>
-                  <span>Edit</span>
-                </button>
-                <mat-divider></mat-divider>
-                <button class="md-button" mat-menu-item><span>Approve</span></button>
-                <mat-divider></mat-divider>
-                <button class="md-button" mat-menu-item><span>Reject</span></button>
+                <button class="md-button" (click)="updateStatus(element, 'Absent')" mat-menu-item><span>Absent</span></button>
               </mat-menu>
           </td>
-        </ng-container> -->
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

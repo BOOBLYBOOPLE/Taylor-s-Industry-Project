@@ -113,6 +113,5 @@ export class EmployeeAddComponent implements OnInit {
         error : err => { console.log("failed"); }
       });
     }
-
   }
 }

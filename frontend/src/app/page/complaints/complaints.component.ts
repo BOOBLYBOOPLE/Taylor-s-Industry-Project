@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { complaintsDataModel } from 'src/assets/shared/data.model';
 
 @Component({
   selector: 'app-complaints',
@@ -17,7 +18,7 @@ export class ComplaintsComponent implements OnInit{
 
   constructor(private web: webService){}
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<complaintsDataModel[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,21 +30,12 @@ export class ComplaintsComponent implements OnInit{
   loadComplaints(){
       this.web.webServiceRetrieve(`${this.apiUrl}/complaints`).subscribe({
         next: (data: any) => {
-          const formattedData = data.map((item: any, index: number) => ({
-            ...item,
-            position: index + 1
-          }));
-      this.dataSource = new MatTableDataSource(formattedData);
-
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        const searchString = filter.toLowerCase();
-        const name = data.employeeId?.name?.toLowerCase() || '';
-        return name.includes(searchString);
-      };
-    }
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('Complaints loaded:', data);
+        },
+        error: (err) => console.error('Error loading recruitment:', err)
     });
   }
 
