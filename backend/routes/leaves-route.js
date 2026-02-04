@@ -46,7 +46,6 @@ router.post('/', async(req, res) => {
   }
 });
 
-// Update an existing Leave
 router.put('/:id', async (req, res) => {
   try {
     const updatedLeave = await Leaves.findByIdAndUpdate(

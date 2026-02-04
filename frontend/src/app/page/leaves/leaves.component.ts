@@ -4,6 +4,7 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { leavesDataModel } from 'src/assets/shared/data.model';
 
 @Component({
   selector: 'app-leaves',
@@ -12,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class LeavesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'department', 'leaveType', 'dateStart', 'dateEnd', 'status', 'actions'];
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<leavesDataModel>([]);
 
   public apiUrl = globalEnv.apiUrl;
 
@@ -26,32 +27,15 @@ export class LeavesComponent implements OnInit {
   }
 
   loadLeaves() {
-    this.web.webServiceRetrieve(`${this.apiUrl}/leaves`).subscribe({
-      next: (data: any) => {
-        const formattedData = data.map((item: any, index: number) => ({
-          ...item,
-          position: index + 1
-        }));
-
-        this.dataSource = new MatTableDataSource(formattedData);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-        this.dataSource.filterPredicate = (data: any, filter: string) => {
-          const searchString = filter.toLowerCase();
-
-          const name = data.employeeId?.name?.toLowerCase() || '';
-          const dept = data.employeeId?.department?.toLowerCase() || '';
-          const type = data.type?.toLowerCase() || '';
-          const status = data.status?.toLowerCase() || '';
-
-          return name.includes(searchString) ||
-                 dept.includes(searchString) ||
-                 type.includes(searchString) ||
-                 status.includes(searchString);
-        };
-      }
-    });
+    this.web.webServiceRetrieve<leavesDataModel[]>(`${this.apiUrl}/leaves`).subscribe({
+        next: (data) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('Leaves loaded:', data);
+        },
+        error: (err) => console.error('Error loading leaves:', err)
+      });
   }
 
   applyFilter(event: Event) {

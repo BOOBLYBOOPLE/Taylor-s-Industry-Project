@@ -4,6 +4,7 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { payrollDataModel } from 'src/assets/shared/data.model';
 
 @Component({
   selector: 'app-payroll',
@@ -16,7 +17,7 @@ export class PayrollComponent implements OnInit {
   panelOpenState = false;
 
   displayedColumns: string[] = ['position', 'name', 'department', 'title', 'date', 'amount', 'hours', 'actions'];
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<payrollDataModel>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -26,33 +27,14 @@ export class PayrollComponent implements OnInit {
   }
 
   loadPayload() {
-    this.web.webServiceRetrieve(`${this.apiUrl}/finance`).subscribe((data: any) => {
-
-      const formattedData = data.map((item: any) => ({
-        ...item,
-        netPay: (item.amount - (item.deductions || 0) + (item.bonuses || 0))
-      }));
-
-      this.dataSource = new MatTableDataSource(formattedData);
-
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        const searchString = filter.toLowerCase();
-
-        const name = data.employeeId?.name?.toLowerCase() || '';
-        const department = data.employeeId?.department?.toLowerCase() || '';
-        const title = data.employeeId?.title?.toLowerCase() || '';
-        const amount = data.netPay?.toString() || '';
-        const hours = data.hoursWorked?.toString() || '';
-
-        return name.includes(searchString) ||
-               department.includes(searchString) ||
-               title.includes(searchString) ||
-               amount.includes(searchString) ||
-               hours.includes(searchString);
-      };
+    this.web.webServiceRetrieve<payrollDataModel[]>(`${this.apiUrl}/finance`).subscribe({
+        next: (data) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('Payroll loaded:', data);
+        },
+        error: (err) => console.error('Error loading payroll:', err)
     });
   }
 
