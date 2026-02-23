@@ -40,6 +40,14 @@ export class PayrollAddComponent implements OnInit{
     onEmployeeSelect(event: any) {
     const empId = event.value;
     this.selectedEmployee = this.employees.find(e => e._id === empId || e.id === empId);
+     this.payrollForm = this.fb.group({
+          employeeId: [this.selectedEmployee._id, Validators.required],
+          date: [new Date(), Validators.required],
+          amount: [this.selectedEmployee.salary, Validators.required],
+          hoursWorked: [0],
+          deductions: [0],
+          bonuses: [0]
+        });
   }
 
   onSubmit() {

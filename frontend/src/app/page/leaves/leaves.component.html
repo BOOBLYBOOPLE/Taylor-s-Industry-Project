@@ -1,54 +1,33 @@
 <body class="body-padding">
-  <div class="ms-2 me-2">
-  <mat-grid-list cols="4" rowHeight="4:1">
-    <mat-grid-tile class="card-container">
-      <mat-card class="card card-body card-center">
-        Attendance: 5 attending
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile class="card-container">
-      <mat-card class="card card-body card-center">
-        Absent: 1 on leave
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile class="card-container">
-      <mat-card class="card card-body card-center">
-          Upcoming Event: CNY Holiday
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile class="card-container">
-      <mat-card class="card card-body card-center">
-        Next Meeting: Friday 10am
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="ms-2 me-2 ">
+    <div class="d-inline-flex">
+      <div class="ms-2 spacer-margin-left">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <mat-icon matSuffix>search</mat-icon>
+          <input (keyup)="applyFilter($event)" matInput>
+        </mat-form-field>
+        <button class="ms-2 button-3" routerLink="create" ><i class="fa fa-add"></i></button>
+        <!-- <button class="ms-2 button-3"><i class="fa fa-filter"></i></button> -->
+      </div>
+      <!-- <div class="me-2 spacer-margin-right">
+        <mat-form-field appearance="outline">
+          <mat-label>Chose a date</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-hint>MM-DD-YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div> -->
+    </div>
   </div>
 
 <div class="ms-2 me-2 ">
   <mat-card class="card card-body">
-  <div class="d-inline-flex">
-    <div class="ms-2 spacer-margin-left">
-      <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <mat-icon matSuffix>search</mat-icon>
-        <input (keyup)="applyFilter($event)" matInput>
-      </mat-form-field>
-      <button class="ms-2 button-3" routerLink="create" ><i class="fa fa-add"></i></button>
-      <!-- <button class="ms-2 button-3"><i class="fa fa-filter"></i></button> -->
-    </div>
-    <!-- <div class="me-2 spacer-margin-right">
-      <mat-form-field appearance="outline">
-        <mat-label>Chose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM-DD-YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div> -->
-  </div>
   <div class="ms-2 me-2">
-          <h1 class="ms-2">Leave List</h1>
-    <table mat-table [dataSource]="dataSource">
+    <h2 class="ms-3 mt-2 mb-0">Leave List</h2>
+    <div class="ms-3 me-3">
+      <table mat-table class="mt-2" [dataSource]="dataSource">
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="tbl-header"> No. </th>
           <td mat-cell class="tbl-content" *matCellDef="let element; let i = index"> {{i + 1}} </td>
@@ -132,9 +111,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-  </div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of Leaves">
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of Leaves">
       </mat-paginator>
+    </div>
+  </div>
 </mat-card>
 </div>
 </body>

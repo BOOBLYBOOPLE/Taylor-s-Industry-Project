@@ -1,73 +1,106 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CanvasJS, CanvasJSChart } from '@canvasjs/angular-charts';
 import { webService } from 'src/assets/services/webServices';
 import { globalEnv } from 'src/assets/shared/global-env.component';
-import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { employeeDataModel } from 'src/assets/shared/data.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { forkJoin } from 'rxjs';
 
-CanvasJS.addColorSet("customColorSet",["#ffcb06", "#ce1249", "#3a943c", "#7f3e83", "#812900", "#2078b6", "#df7f2e", "#e3e3e3"]);
+CanvasJS.addColorSet("customColorSet",["#3a943c", "#ce1249", "#ffcb06", "#7f3e83"]);
 
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.css']
 })
+export class AttendanceComponent implements AfterViewInit ,OnInit {
 
-export class AttendanceComponent implements AfterViewInit, OnInit {
+  constructor(private web: webService) {}
 
-  constructor(
-    private web: webService,
-    private router: Router
-  ){}
   displayedColumns: string[] = ['position', 'name', 'department', 'status', 'actions'];
-  dataSource = new MatTableDataSource<employeeDataModel>([]);
+  dataSource = new MatTableDataSource<any>([]);
+
   public apiUrl = globalEnv.apiUrl;
 
-  public present: any;
-  public absent: any;
-  public presentPercent: any;
-  public absentPercent: any;
+  public present: number = 0;
+  public absent: number = 0;
+  public ratePresent: any;
+  public rateAbsent: any;
+  public chartOptions: any;
 
   @ViewChild(CanvasJSChart) chartComponent!: CanvasJSChart;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public chartOptions: any;
-
   ngOnInit(): void {
-    this.web.webServiceRetrieve<employeeDataModel[]>(`${this.apiUrl}/employees`).subscribe({
-     next: (data: any) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          console.log('Employees loaded:', data);
-        },
-        error: (err) => console.error('Error loading employees:', err)
-    });
-    this.updateGraph();
+    this.loadDashboardData();
   }
 
   ngAfterViewInit(): void {
-      if(this.chartComponent && this.chartComponent.chart){
-        setTimeout(() => {
-          this.chartComponent.chart.render();
-        }, 100);
-      }
+    this.calculateTotals();
+  }
+
+  loadDashboardData() {
+    forkJoin({
+      employees: this.web.webServiceRetrieve<any[]>(`${this.apiUrl}/employees`),
+      attendance: this.web.webServiceRetrieve<any>(`${this.apiUrl}/attendance`)
+    }).subscribe({
+      next: ({ employees, attendance }) => {
+        const today = new Date().setHours(0,0,0,0);
+        const todaysAttendance = attendance.attendanceList.filter((record: any) => {
+          const recordDate = new Date(record.date).setHours(0,0,0,0);
+          return recordDate === today;
+        });
+
+        const mergedData = employees.map(emp => {
+          const record = todaysAttendance.find((att: any) =>
+            (att.employeeId._id === emp._id) || (att.employeeId === emp._id)
+          );
+
+          return {
+            ...emp,
+            status: record ? record.status : 'Absent'
+          };
+        });
+
+        this.dataSource.data = mergedData;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        this.calculateTotals();
+      },
+      error: (err) => console.error('Error loading dashboard:', err)
+    });
+  }
+
+  calculateTotals() {
+    this.present = this.dataSource.data.filter((e: any) => e.status === 'Present').length;
+    this.absent = this.dataSource.data.filter((e: any) => e.status === 'Absent').length;
+
+    this.ratePresent = this.present / this.dataSource.data.length * 100;
+    this.rateAbsent = this.absent / this.dataSource.data.length * 100;
+    this.updateGraph();
   }
 
   updateStatus(element: any, newStatus: string) {
     const id = element._id;
     const updateData = { status: newStatus };
 
+    const previousStatus = element.status;
+    element.status = newStatus;
+    this.calculateTotals();
+
     this.web.webServiceUpdate(`${this.apiUrl}/attendance/${id}`, updateData).subscribe({
-      next: () => {
-        element.status = newStatus;
+      next: (res) => {
+        this.calculateTotals();
+        console.log('Status updated successfully');
       },
-      error: (error) => console.error('Error updating status:', error)
+      error: (error) => {
+        console.error('Error updating status:', error);
+        element.status = previousStatus;
+        this.calculateTotals();
+      }
     });
   }
 
@@ -75,20 +108,32 @@ export class AttendanceComponent implements AfterViewInit, OnInit {
     this.chartOptions = {
       animationEnabled: true,
       theme: "dark2",
-      colorSet: "customColorSet",
       title:{
-        text: "Attendance Rate"
+        text: "Today's Attendance",
+        fontSize: 20
       },
+      subtitles: [{
+        text: `${this.present + this.absent} Total`,
+        verticalAlign: "center",
+        dockInsidePlotArea: true,
+        fontSize: 15
+      }],
       data: [{
         type: "doughnut",
         indexLabel: "{name}: {y}",
-        innerRadius: "90%",
-        yValueFormatString: "#,##0.00'%'",
+        innerRadius: "80%",
+        yValueFormatString: "#",
         dataPoints: [
-        { y: this.present, name: "Present" },
-        { y: this.absent, name: "Absent" },
+          { y: this.ratePresent, name: "Present" },
+          { y: this.rateAbsent, name: "Absent" },
         ]
       }]
+    }
+
+    if(this.chartComponent && this.chartComponent.chart){
+      setTimeout(() => {
+        this.chartComponent.chart.render();
+      }, 100);
     }
   }
 }

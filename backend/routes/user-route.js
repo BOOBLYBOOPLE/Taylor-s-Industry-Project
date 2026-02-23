@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const user = require('../schema/user');
+const Employee = require('../schema/employee');
 
 const router = express.Router();
 const auth = require('../middleware/auth');

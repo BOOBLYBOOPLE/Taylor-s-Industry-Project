@@ -9,68 +9,67 @@
   </div>
 
   <div class="ms-2 me-2">
-    <mat-card class="card">
-      <div class="d-inline-flex" style="padding: 15px;">
-         <h3>Stored Documents</h3>
+    <mat-card class="card mat-elevation-z8">
+      <h2 class="ms-3 mt-2 mb-0">Stored Documents</h2>
+      <div class="ms-3 me-3">
+        <table mat-table [dataSource]="dataSource" class="mt-2">
+
+          <ng-container matColumnDef="position">
+            <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> File Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date Submitted </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="submit">
+            <th mat-header-cell *matHeaderCellDef> Submited By </th>
+            <td mat-cell *matCellDef="let element"> {{element.submit}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="size">
+            <th mat-header-cell *matHeaderCellDef> Size </th>
+            <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="button-content" [matMenuTriggerFor]="menu">
+                <span>actions</span><mat-icon>arrow_drop_down</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button class="md-button" mat-menu-item [routerLink]="['/forms/view', element._id]">
+                  <mat-icon>visibility</mat-icon><span>View</span>
+                </button>
+                <mat-divider></mat-divider>
+                <a [href]="getDownloadUrl(element.filename)" target="_blank" class="md-button" mat-menu-item>
+                  <mat-icon color="primary">download</mat-icon><span>Download</span>
+                </a>
+                <mat-divider></mat-divider>
+                <button style="color: red" class="md-button" (click)="onDelete(element)" mat-menu-item>
+                  <mat-icon color="warn">delete</mat-icon><span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </div>
-
-      <table mat-table [dataSource]="dataSource" class="table-margin">
-
-        <ng-container matColumnDef="position">
-          <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> File Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Date Submitted </th>
-          <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="submit">
-          <th mat-header-cell *matHeaderCellDef> Submited By </th>
-          <td mat-cell *matCellDef="let element"> {{element.submit}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="size">
-          <th mat-header-cell *matHeaderCellDef> Size </th>
-          <td mat-cell *matCellDef="let element"> {{element.size}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> Description </th>
-          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let element">
-            <button class="button-content" [matMenuTriggerFor]="menu">
-              <span>actions</span><mat-icon>arrow_drop_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button class="md-button" mat-menu-item [routerLink]="['/forms/view', element._id]">
-                <mat-icon>visibility</mat-icon><span>View</span>
-              </button>
-              <mat-divider></mat-divider>
-              <a [href]="getDownloadUrl(element.filename)" target="_blank" class="md-button" mat-menu-item>
-                <mat-icon color="primary">download</mat-icon><span>Download</span>
-              </a>
-              <mat-divider></mat-divider>
-              <button style="color: red" class="md-button" (click)="onDelete(element)" mat-menu-item>
-                <mat-icon color="warn">delete</mat-icon><span>Delete</span>
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
     </mat-card>
   </div>
 </body>

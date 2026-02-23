@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Employee = require('../schema/employee');
+const User = require('../schema/user');
 
 router.get('/', async (req, res) => {
   try {
@@ -40,6 +41,10 @@ router.delete('/:id', async (req, res) => {
   try {
     await Employee.findByIdAndDelete(req.params.id);
     res.json({ message: 'Employee deleted' });
+
+    await createUser.findByIdAndDelete(req.params.id);
+    res.json({ message: 'User deleted' });
+
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -57,12 +62,31 @@ router.post('/', async (req, res) => {
       phone: req.body.phone,
       salary: req.body.salary,
       workingHours: req.body.workingHours,
-      about: req.body.about
+      about: req.body.about,
+      password: req.body.password
     });
     await employee.save();
     res.status(201).json(employee);
+
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+router.post('/createUser', async (req, res) => {
+  try{
+    
+    const createUser = new User({
+      username: req.body.name,
+      password: req.body.password,
+      email: req.body.email,
+      role: req.body.role
+    });
+    await createUser.save();
+    res.status(201).json(createUser);
+
+  } catch (error){
+    res.status(500).json({ message: error.message });
   }
 });
 

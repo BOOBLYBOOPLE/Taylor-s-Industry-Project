@@ -7,15 +7,16 @@ const attendanceScoreSchema = new mongoose.Schema({
 })
 
 const attendanceListSchema = new mongoose.Schema({
-      employeeId: { 
-          type: mongoose.Schema.Types.ObjectId, 
-          ref: 'Employee',
-          required: true 
-      },
-    status: {type: Boolean}
+    date: {type: Date, required: true},
+    employeeId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Employee',
+        required: true 
+    },
+    status: {type: String, enum: ['Present', 'Absent'], default: 'Absent'}
 })
 
-const attendanceScore = mongoose.model('AttendanceScore', attendanceScoreSchema);
-const attendanceList = mongoose.model('AttendanceList', attendanceListSchema);
+const AttendanceScore = mongoose.model('AttendanceScore', attendanceScoreSchema);
+const AttendanceList = mongoose.model('AttendanceList', attendanceListSchema);
 
-module.exports = {attendanceScore, attendanceList};
+module.exports = {AttendanceScore, AttendanceList};
