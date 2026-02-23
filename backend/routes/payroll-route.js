@@ -33,7 +33,8 @@ router.post('/', async(req, res) => {
       amount: req.body.amount,
       hoursWorked: req.body.hoursWorked,
       deductions: req.body.deductions,
-      bonuses: req.body.bonuses
+      bonuses: req.body.bonuses,
+      netPay: (req.body.amount - req.body.deductions + req.body.bonuses)
     });
     await payroll.save();
     res.status(201).json(payroll);

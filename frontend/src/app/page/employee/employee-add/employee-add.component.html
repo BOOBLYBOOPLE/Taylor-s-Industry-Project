@@ -60,6 +60,11 @@
           <input type="text" formControlName="workingHours" class="form-control" required>
         </div>
 
+        <div *ngIf="!isEditing" class="ms-4 me-4 mb-3">
+          <label>Password</label>
+          <input type="text" formControlName="password" class="form-control" required>
+        </div>
+
         <div class="ms-4 me-4 mb-3">
           <label>About Employee</label>
           <quill-editor formControlName="about" [modules]="quillConfig" [styles]="quillStyle"></quill-editor>

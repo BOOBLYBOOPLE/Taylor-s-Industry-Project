@@ -13,10 +13,11 @@ import { payrollDataModel } from 'src/assets/shared/data.model';
 export class PayrollComponent implements OnInit {
 
   constructor(private web: webService) {}
+  public netPay: any;
   public apiUrl = globalEnv.apiUrl;
   panelOpenState = false;
 
-  displayedColumns: string[] = ['position', 'name', 'department', 'title', 'date', 'amount', 'hours', 'actions'];
+  displayedColumns: string[] = ['position', 'name', 'department', 'title', 'date', 'total', 'hours', 'actions'];
   dataSource = new MatTableDataSource<payrollDataModel>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -24,6 +25,7 @@ export class PayrollComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPayload();
+
   }
 
   loadPayload() {
@@ -32,7 +34,7 @@ export class PayrollComponent implements OnInit {
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log('Payroll loaded:', data);
+          console.log(this.dataSource.data);
         },
         error: (err) => console.error('Error loading payroll:', err)
     });

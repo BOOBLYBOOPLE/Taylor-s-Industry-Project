@@ -51,7 +51,7 @@ const routes: Routes = [
       { path: 'home', component: HomepageComponent },
       { path: 'info', component: DocumentationComponent },
       { path: 'report-bugs', component: ReportBugsComponent },
-      // { path: 'debug', component: TestPageComponent },
+      { path: 'debug', component: TestPageComponent },
 
       { path: 'employee', component: EmployeeComponent},
       { path: 'employee/add-employee', component: EmployeeAddComponent, canActivate: [adminGuard]},

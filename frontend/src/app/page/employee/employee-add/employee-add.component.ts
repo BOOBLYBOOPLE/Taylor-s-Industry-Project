@@ -41,6 +41,22 @@ export class EmployeeAddComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    if(!this.isEditing){
+      this.employeeAddForm = new FormGroup({
+        name: new FormControl(null, Validators.required),
+        department: new FormControl(null, Validators.required),
+        title: new FormControl(null, Validators.required),
+        DOB: new FormControl(null),
+        dateOfEntry: new FormControl(null),
+        email: new FormControl(null, Validators.email),
+        phone: new FormControl(null, Validators.pattern('^[0-9]+$')),
+        salary: new FormControl(null, Validators.required),
+        workingHours: new FormControl(null, Validators.required),
+        about: new FormControl(null),
+        password: new FormControl(null, Validators.required)
+      });
+    }
+    else{
       this.employeeAddForm = new FormGroup({
         name: new FormControl(null, Validators.required),
         department: new FormControl(null, Validators.required),
@@ -53,6 +69,7 @@ export class EmployeeAddComponent implements OnInit {
         workingHours: new FormControl(null, Validators.required),
         about: new FormControl(null)
       });
+    }
 
       this.employeeID = this.route.snapshot.paramMap.get('id');
 
@@ -83,29 +100,58 @@ export class EmployeeAddComponent implements OnInit {
   }
   onSubmit(){
     const form = this.employeeAddForm.value;
-    const newEmployee: any = {
-       name: form.name,
-       department: form.department,
-       title: form.title,
-       DOB: form.DOB,
-       dateOfEntry: form.dateOfEntry,
-       email: form.email,
-       phone: form.phone,
-       salary: form.salary,
-       workingHours: form.workingHours,
-       about: form.about
-    };
 
     if(this.isEditing){
+      const newEmployee: any = {
+        name: form.name,
+        department: form.department,
+        title: form.title,
+        DOB: form.DOB,
+        dateOfEntry: form.dateOfEntry,
+        email: form.email,
+        phone: form.phone,
+        salary: form.salary,
+        workingHours: form.workingHours,
+        about: form.about
+      };
+
       this.webService.webServiceUpdate(`${this.apiUrl}/employees/${this.employeeID}`, newEmployee).subscribe({
         next: responseData => {
           console.log("updated");
           this.router.navigate(['employee']);
         }, error: error => { console.log(error); }
       });
+
     } else {
+      const newEmployee: any = {
+        name: form.name,
+        department: form.department,
+        title: form.title,
+        DOB: form.DOB,
+        dateOfEntry: form.dateOfEntry,
+        email: form.email,
+        phone: form.phone,
+        salary: form.salary,
+        workingHours: form.workingHours,
+        password: form.password,
+        about: form.about
+      };
+
+      const newUser: any = {
+        name: form.name,
+        password: form.password,
+        email: form.email,
+        role: 'user'
+      }
+
+      this.webService.webServiceCreate(`${this.apiUrl}/employees/createUser`, newUser).subscribe({
+        next: responseData => {
+          console.log("new user created");
+        }, error: err => { console.log("bruh"); }
+      });
+
       this.webService.webServiceCreate(`${this.apiUrl}/employees`, newEmployee).subscribe({
-        next: responseData =>{
+        next: responseData => {
           console.log("success");
           this.employeeAddForm.reset();
           this.router.navigate(['employee']);

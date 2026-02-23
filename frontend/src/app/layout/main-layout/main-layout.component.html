@@ -101,17 +101,17 @@
         <span>{{displayedColumns.settings}}</span>
       </button>
       <mat-divider></mat-divider>
-      <!-- <button class="md-button" mat-list-item routerLink="/debug">
+      <button class="md-button" mat-list-item routerLink="/debug">
         <i class="fa fa-desktop"></i>
         <span>  DebugPage</span>
-      </button> -->
+      </button>
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content style="margin: 0px;">
     <mat-toolbar class="toolbar">
-      <button matTooltip="Toggle Sidebar" mat-icon-button (click)="sidenav.toggle()">
+      <button matTooltip="Toggle Sidebar" mat-icon-button (click)="toggleSideNav()">
         <mat-icon >menu</mat-icon>
       </button>
         <span>{{titleDisplay}}</span>

@@ -1,15 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/assets/services/auth.service';
 import { ReportBugsComponent } from 'src/app/components/report-bugs/report-bugs.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DocumentationComponent } from 'src/app/components/documentation/documentation.component';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
 })
 export class MainLayoutComponent implements OnInit, OnDestroy{
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
   titleDisplay: any;
   displayedColumns = {
     home: ' Home',
@@ -69,6 +73,20 @@ export class MainLayoutComponent implements OnInit, OnDestroy{
     dialogRef.afterClosed().subscribe(result => {
       console.log('67', result);
     });
+  }
+  toggleSideNav(){
+    if(!this.sidenav.opened){
+      this.payrollPanelOpenState = false;
+      this.calendarPanelOpenState = false;
+      this.formsPanelOpenState = false;
+      console.log(this.payrollPanelOpenState);
+
+    }
+    else{
+            console.log(this.payrollPanelOpenState);
+            console.log("AWE");
+    }
+    this.sidenav.toggle();
   }
 
   openInfo(){

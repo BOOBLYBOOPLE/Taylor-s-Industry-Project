@@ -11,93 +11,96 @@
 
   <div class="ms-2 me-2">
     <mat-card class="card">
-      <h1 class="ms-2">Recruitment Candidates</h1>
-      <table mat-table [dataSource]="dataSource" class="table-margin">
-        <ng-container matColumnDef="position">
-          <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
-        </ng-container>
+      <h2 class="ms-3 mt-2 mb-0">Recruitment Candidates</h2>
+      <div class="ms-3 me-3">
+        <table mat-table [dataSource]="dataSource" class="mt-2">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="age">
-          <th mat-header-cell *matHeaderCellDef> Age </th>
-          <td mat-cell *matCellDef="let element"> {{element.age}} </td>
-        </ng-container>
+          <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef> Age </th>
+            <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="University_enrolled">
-          <th mat-header-cell *matHeaderCellDef> University Enrolled </th>
-          <td mat-cell *matCellDef="let element"> {{element.University}} </td>
-        </ng-container>
+          <ng-container matColumnDef="University_enrolled">
+            <th mat-header-cell *matHeaderCellDef> University Enrolled </th>
+            <td mat-cell *matCellDef="let element"> {{element.University}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.date | date:'mediumDate'}} </td>
-        </ng-container>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'mediumDate'}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}}
-            <mat-icon *ngIf="element.status === 'Accepted'"
-              style="font-size: 16px; color: green; vertical-align: middle;"
-              matTooltip="Approved">
-              check_circle
-            </mat-icon>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status}}
+              <mat-icon *ngIf="element.status === 'Accepted'"
+                style="font-size: 16px; color: green; vertical-align: middle;"
+                matTooltip="Approved">
+                check_circle
+              </mat-icon>
 
-            <mat-icon *ngIf="element.status === 'Applied'"
-                      style="font-size: 16px; color: orange; vertical-align: middle;"
-                      matTooltip="Pending Approval">
-              hourglass_empty
-            </mat-icon>
+              <mat-icon *ngIf="element.status === 'Applied'"
+                        style="font-size: 16px; color: orange; vertical-align: middle;"
+                        matTooltip="Pending Approval">
+                hourglass_empty
+              </mat-icon>
 
-            <mat-icon *ngIf="element.status === 'Rejected'"
-                      style="font-size: 16px; color: red; vertical-align: middle;"
-                      matTooltip="Rejected">
-                      cancel
-            </mat-icon>
-           </td>
-        </ng-container>
+              <mat-icon *ngIf="element.status === 'Rejected'"
+                        style="font-size: 16px; color: red; vertical-align: middle;"
+                        matTooltip="Rejected">
+                        cancel
+              </mat-icon>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="resume">
-          <th mat-header-cell *matHeaderCellDef> Resume </th>
-          <td mat-cell *matCellDef="let element">
-           <a *ngIf="element.resume" [href]="element.resume" target="_blank" mat-button color="primary">
-              Download
-            </a>
-            <span *ngIf="!element.resume">No File</span>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="resume">
+            <th mat-header-cell *matHeaderCellDef> Resume </th>
+            <td mat-cell *matCellDef="let element">
+            <a *ngIf="element.resume" [href]="element.resume" target="_blank" mat-button color="primary">
+                Download
+              </a>
+              <span *ngIf="!element.resume">No File</span>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let element">
-            <button class="button-content" [matMenuTriggerFor]="menu"><span>actions</span><mat-icon>arrow_drop_down</mat-icon></button>
-              <mat-menu #menu="matMenu">
-                <button class="md-button" mat-menu-item [routerLink]="['/recruitment/view-recruitment', element._id]">
-                  <mat-icon>visibility</mat-icon><span>view</span></button>
-                <mat-divider></mat-divider>
-                <button *ngIf="element.status === 'Applied'"
-                  (click)="updateStatus(element, 'Accepted')" class="md-button" mat-menu-item>
-                  <mat-icon style="color: green;" >check</mat-icon><span>accept</span></button>
-                <mat-divider></mat-divider>
-                <button *ngIf="element.status === 'Applied'"
-                  (click)="updateStatus(element, 'Rejected')" class="md-button" mat-menu-item>
-                  <mat-icon>close</mat-icon><span>reject</span></button>
-                <mat-divider></mat-divider>
-                <button style="color: red" class="md-button" (click)="onDelete(element)" mat-menu-item>
-                  <mat-icon color="warn">delete</mat-icon><span>Delete</span></button>
-              </mat-menu>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="button-content" [matMenuTriggerFor]="menu"><span>actions</span><mat-icon>arrow_drop_down</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                  <button class="md-button" mat-menu-item [routerLink]="['/recruitment/view-recruitment', element._id]">
+                    <mat-icon>visibility</mat-icon><span>view</span></button>
+                  <mat-divider></mat-divider>
+                  <button *ngIf="element.status === 'Applied'"
+                    (click)="updateStatus(element, 'Accepted')" class="md-button" mat-menu-item>
+                    <mat-icon style="color: green;" >check</mat-icon><span>accept</span></button>
+                  <mat-divider></mat-divider>
+                  <button *ngIf="element.status === 'Applied'"
+                    (click)="updateStatus(element, 'Rejected')" class="md-button" mat-menu-item>
+                    <mat-icon>close</mat-icon><span>reject</span></button>
+                  <mat-divider></mat-divider>
+                  <button style="color: red" class="md-button" (click)="onDelete(element)" mat-menu-item>
+                    <mat-icon color="warn">delete</mat-icon><span>Delete</span></button>
+                </mat-menu>
+            </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of recruitment">
-      </mat-paginator>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of recruitment">
+        </mat-paginator>
+      </div>
+
     </mat-card>
   </div>
 </body>

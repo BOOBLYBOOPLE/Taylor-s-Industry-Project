@@ -5,14 +5,23 @@ export class employeeDataModel{
     public department: string,
     public title: string,
     public phoneNumber: string,
-    public _id?: number){}
+    public status: String,
+    public _id?: number,
+  ){}
 }
 
 export class payrollDataModel{
   constructor(
     public date: Date,
     public amount: number,
-    public hrsWorked: Number
+    public hrsWorked: Number,
+    public netPay: Number
+  ){}
+}
+
+export class attendanceDataModel{
+  constructor(
+    public status: String
   ){}
 }
 
@@ -53,5 +62,3 @@ export class recruitmentDataModel{
     public status: String,
   ){}
 }
-
-
