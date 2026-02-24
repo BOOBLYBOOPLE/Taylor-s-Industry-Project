@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { webService } from 'src/assets/services/webServices';
-import { dataComponentService } from 'src/assets/shared/data.component';
 import { globalEnv } from 'src/assets/shared/global-env.component';
-import { employeeDataModel } from 'src/assets/shared/data.model';
 
 @Component({
   selector: 'app-employee-add',
@@ -51,6 +49,8 @@ export class EmployeeAddComponent implements OnInit {
         email: new FormControl(null, Validators.email),
         phone: new FormControl(null, Validators.pattern('^[0-9]+$')),
         salary: new FormControl(null, Validators.required),
+        startTime: new FormControl(null, Validators.required),
+        endTime: new FormControl(null, Validators.required),
         workingHours: new FormControl(null, Validators.required),
         about: new FormControl(null),
         password: new FormControl(null, Validators.required)
@@ -66,6 +66,8 @@ export class EmployeeAddComponent implements OnInit {
         email: new FormControl(null, Validators.email),
         phone: new FormControl(null, Validators.pattern('^[0-9]+$')),
         salary: new FormControl(null, Validators.required),
+        startTime: new FormControl(null, Validators.required),
+        endTime: new FormControl(null, Validators.required),
         workingHours: new FormControl(null, Validators.required),
         about: new FormControl(null)
       });
@@ -90,6 +92,8 @@ export class EmployeeAddComponent implements OnInit {
         email: data.email,
         phone: data.phone,
         salary: data.salary,
+        startTime: data.startTime,
+        endTime: data.endTime,
         workingHours: data.workingHours,
         about: data.about
       });
@@ -111,6 +115,8 @@ export class EmployeeAddComponent implements OnInit {
         email: form.email,
         phone: form.phone,
         salary: form.salary,
+        startTime: form.startTime,
+        endTime: form.endTime,
         workingHours: form.workingHours,
         about: form.about
       };
@@ -132,7 +138,8 @@ export class EmployeeAddComponent implements OnInit {
         email: form.email,
         phone: form.phone,
         salary: form.salary,
-        workingHours: form.workingHours,
+        startTime: form.startTime,
+        endTime: form.endTime,
         password: form.password,
         about: form.about
       };

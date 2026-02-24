@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { DialogBoxComponent }from '../../components/popup-window/dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
 
 export interface PeriodicElement{
   name: string;
@@ -29,6 +30,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class TestPageComponent {
+  @ViewChild('picker') picker!: NgxMatTimepickerComponent;
   panelOpenState = false;
   displayedColumns: string[] = ['position', 'name', 'department', 'title', 'actions'];
   dataSource = ELEMENT_DATA;
