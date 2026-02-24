@@ -21,6 +21,7 @@ export class EmployeeComponent implements OnInit {
     'name',
     'department',
     'title',
+    'workingHours',
     'salary',
     'actions'];
 

@@ -25,7 +25,8 @@ export class EmployeeViewComponent implements OnInit {
   public dateOfEntry: any;
   public phone: any;
   public salary: any;
-  public workingHours: any;
+  public startTime: any;
+  public endTime: any;
   public about: any;
   constructor(
     private router: Router,
@@ -48,7 +49,8 @@ export class EmployeeViewComponent implements OnInit {
             this.email = responseData.email;
             this.phone = responseData.phone;
             this.salary = responseData.salary;
-            this.workingHours = responseData.workingHours;
+            this.startTime = responseData.startTime;
+            this.endTime = responseData.endTime;
             this.about = responseData.about;
           }, error: error => {
             console.log("CANNOT VIEW EMPLOYEE");

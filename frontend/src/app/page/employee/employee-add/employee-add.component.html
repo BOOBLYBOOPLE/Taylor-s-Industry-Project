@@ -9,7 +9,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of Birth</mat-label>
               <input matInput [matDatepicker]="dobpicker" formControlName="DOB">
-              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="dobpicker"></mat-datepicker-toggle>
               <mat-datepicker #dobpicker></mat-datepicker>
             </mat-form-field>
@@ -18,9 +18,28 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of Joining Company</mat-label>
               <input matInput [matDatepicker]="entryPicker" formControlName="dateOfEntry">
-              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="entryPicker"></mat-datepicker-toggle>
               <mat-datepicker #entryPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Start Work Time</mat-label>
+              <input matInput [ngxMatTimepicker]="startPicker" [format]="24" formControlName="startTime">
+              <ngx-mat-timepicker-toggle [for]="startPicker" matSuffix></ngx-mat-timepicker-toggle>
+              <ngx-mat-timepicker #startPicker></ngx-mat-timepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>End Work Time</mat-label>
+              <input matInput [ngxMatTimepicker]="endPicker" [format]="24" formControlName="endTime">
+              <ngx-mat-timepicker-toggle [for]="endPicker" matSuffix></ngx-mat-timepicker-toggle>
+              <ngx-mat-timepicker #endPicker></ngx-mat-timepicker>
             </mat-form-field>
           </div>
         </div>
@@ -53,11 +72,6 @@
         <div class="ms-4 me-4 mb-3">
           <label>Salary</label>
           <input type="text" formControlName="salary" class="form-control" required>
-        </div>
-
-        <div class="ms-4 me-4 mb-3">
-          <label>Working Hours</label>
-          <input type="text" formControlName="workingHours" class="form-control" required>
         </div>
 
         <div *ngIf="!isEditing" class="ms-4 me-4 mb-3">

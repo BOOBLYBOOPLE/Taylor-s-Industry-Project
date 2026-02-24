@@ -9,7 +9,8 @@ const employeeSchema = new mongoose.Schema({
   email: {type: String, required: true},
   phone: {type: String},
   salary: {type: Number, required: true},
-  workingHours: {type: String, required: true},
+  startTime: {type: String, required: true},
+  endTime: {type: String, required: true},
   about: {type: String},
   password: {type: String, required: true}
 });

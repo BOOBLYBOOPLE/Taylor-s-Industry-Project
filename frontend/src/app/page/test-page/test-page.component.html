@@ -104,4 +104,8 @@
               aria-label="Select page">
 </mat-paginator>
 
-<input type="time">
+<mat-form-field appearance="outline">
+  <mat-label>Select Time</mat-label>
+  <input matInput [ngxMatTimepicker]="timePicker">
+  <ngx-mat-timepicker #timePicker></ngx-mat-timepicker>
+</mat-form-field>

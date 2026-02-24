@@ -61,7 +61,8 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       phone: req.body.phone,
       salary: req.body.salary,
-      workingHours: req.body.workingHours,
+      startTime: req.body.startTime,
+      endTime: req.body.endtime,
       about: req.body.about,
       password: req.body.password
     });
