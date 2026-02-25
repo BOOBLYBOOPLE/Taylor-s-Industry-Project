@@ -10,7 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
 })
-export class MainLayoutComponent implements OnInit, OnDestroy{
+export class MainLayoutComponent implements OnInit{
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -35,6 +35,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy{
   payrollPanelOpenState = false;
   calendarPanelOpenState = false;
   formsPanelOpenState = false;
+  comsPanelOpenState = false;
   currentUrl: string ='';
   isAdmin = false;
 
@@ -61,8 +62,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy{
         this.titleDisplay = title;
   }
 
-  ngOnDestroy(): void {
-      localStorage.clear();
+  clearToken(){
+    localStorage.clear();
   }
 
   openReport(){
@@ -75,17 +76,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy{
     });
   }
   toggleSideNav(){
-    if(!this.sidenav.opened){
-      this.payrollPanelOpenState = false;
-      this.calendarPanelOpenState = false;
-      this.formsPanelOpenState = false;
-      console.log(this.payrollPanelOpenState);
-
-    }
-    else{
-            console.log(this.payrollPanelOpenState);
-            console.log("AWE");
-    }
     this.sidenav.toggle();
   }
 

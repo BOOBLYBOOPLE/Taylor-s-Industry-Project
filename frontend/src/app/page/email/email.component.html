@@ -1,4 +1,5 @@
-<mat-card class="table-card">
+<body>
+
 <div>
     <h1>Inbox</h1>
 </div>
@@ -10,11 +11,14 @@
   <input matInput>
   </mat-form-field>
     <button mat-icon-button class="ms-2"><mat-icon>more_vert</mat-icon></button>
+    <button routerLink="compose" class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">
+      <i class="fa fa-plus-circle"></i>Compose
+    </button>
     <button class="ms-2 button-3"><i class="fa fa-filter"></i></button>
     <button class="ms-2 button-3"><i class="fa fa-refresh"></i></button>
 </div>
 
-
+  <mat-card class="table-card">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-margin">
     <ng-container matColumnDef="position">
       <th mat-header-cell class="tbl-header" *matHeaderCellDef> No. </th>
@@ -59,3 +63,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </mat-card>
+</body>

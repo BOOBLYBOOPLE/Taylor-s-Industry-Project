@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -73,6 +73,9 @@ import { FormsAddComponent } from './page/forms/forms-add/forms-add.component';
 import { FormsViewComponent } from './page/forms/forms-view/forms-view.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { ReportBugsComponent } from './components/report-bugs/report-bugs.component';
+import { EmailAddComponent } from './page/email/email-add/email-add.component';
+import { GridModule, PagerModule } from '@syncfusion/ej2-angular-grids';
+import { EmailViewComponent } from './page/email/email-view/email-view.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +116,8 @@ import { ReportBugsComponent } from './components/report-bugs/report-bugs.compon
     FormsViewComponent,
     DocumentationComponent,
     ReportBugsComponent,
+    EmailAddComponent,
+    EmailViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -151,7 +156,8 @@ import { ReportBugsComponent } from './components/report-bugs/report-bugs.compon
     FormsModule,
     QuillModule,
     DatePipe,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    GridModule, PagerModule,
 ],
   providers: [
     {
