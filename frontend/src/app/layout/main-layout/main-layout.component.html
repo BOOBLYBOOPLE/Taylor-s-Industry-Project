@@ -67,11 +67,6 @@
         </button>
       </mat-expansion-panel>
       <mat-divider></mat-divider>
-      <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/recruitment" (click)="changeTitle(displayedColumns.recruit)">
-        <i class="fa fa-id-card"></i>
-        <span>{{displayedColumns.recruit}}</span>
-      </button>
-      <mat-divider></mat-divider>
       <mat-expansion-panel (opened)="calendarPanelOpenState = true"
                     (closed)="calendarPanelOpenState = false">
         <mat-expansion-panel-header class="md-expansion">
@@ -96,6 +91,29 @@
         </button>
       </mat-expansion-panel>
       <mat-divider></mat-divider>
+
+      <mat-expansion-panel (opened)="comsPanelOpenState = true" (closed)="comsPanelOpenState = false">
+        <mat-expansion-panel-header class="md-expansion">
+          <mat-panel-title>
+            <i class="me-2 fa fa-comments"></i>
+            <span>Communications</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button class="md-button" mat-list-item routerLink="/email/main">
+          <i class="fa fa-envelope"></i>
+          <span> Email</span>
+        </button>
+        <button class="md-button" mat-list-item routerLink="/chat/main">
+          <i class="fa fa-commenting"></i>
+          <span> Chat</span>
+        </button>
+      </mat-expansion-panel>
+
+      <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/recruitment" (click)="changeTitle(displayedColumns.recruit)">
+        <i class="fa fa-id-card"></i>
+        <span>{{displayedColumns.recruit}}</span>
+      </button>
+      <mat-divider></mat-divider>
       <button class="md-button" mat-list-item routerLink="/settings" (click)="changeTitle(displayedColumns.settings)">
         <i class="fa fa-gear"></i>
         <span>{{displayedColumns.settings}}</span>
@@ -119,7 +137,7 @@
       <button (click)="openReport()" [matTooltip]="'Report Bugs'" mat-icon-button>
         <mat-icon>report</mat-icon>
       </button>
-      <button matTooltip="Logout" mat-icon-button routerLink="/">
+      <button matTooltip="Logout" mat-icon-button (click)="clearToken()" routerLink="/">
         <mat-icon >logout</mat-icon>
       </button>
     </mat-toolbar>

@@ -26,7 +26,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-test-page',
   templateUrl: './test-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class TestPageComponent {

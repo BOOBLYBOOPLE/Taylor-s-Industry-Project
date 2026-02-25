@@ -37,6 +37,7 @@ import { FormsViewComponent } from './page/forms/forms-view/forms-view.component
 import { FormsAddComponent } from './page/forms/forms-add/forms-add.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { ReportBugsComponent } from './components/report-bugs/report-bugs.component';
+import { EmailAddComponent } from './page/email/email-add/email-add.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -92,11 +93,17 @@ const routes: Routes = [
   },
   { path: 'email',
     component: EmailLayoutComponent,
-    children: [{path: 'email/main', component: EmailComponent}]
+    canActivate: [authGuard],
+    children: [
+      {path: 'main', component: EmailComponent},
+      {path: 'main/compose', component: EmailAddComponent},
+      {path: 'main/view', component: EmailAddComponent}
+    ]
    },
   { path: 'chat',
     component: ChatLayoutComponent,
-    children: [{path: 'chat/main', component: ChatComponent}]
+    canActivate: [authGuard],
+    children: [{path: 'main', component: ChatComponent}]
    },
 ];
 

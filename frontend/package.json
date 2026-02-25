@@ -29,12 +29,15 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@ng-bootstrap/ng-bootstrap": "^14.2.0",
     "@popperjs/core": "^2.11.6",
+    "@syncfusion/ej2-angular-grids": "^32.2.7",
     "bootstrap": "^5.3.8",
+    "dhtmlx-scheduler": "^7.2.11",
     "ngx-mat-timepicker": "^15.1.7",
     "ngx-quill": "^21.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.12.0",
+    "@syncfusion/ej2-material-theme": "~32.2.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.9",
