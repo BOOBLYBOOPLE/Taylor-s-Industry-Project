@@ -1,1 +1,42 @@
-<p>email-add works!</p>
+<body class="body-padding">
+  <div class="ms-2 me-2">
+    <mat-card class="card card-body" appearance="outlined">
+      <h2 class="ms-4">Compose</h2>
+      <div class="d-flex flex-row ms-4">
+        <span class="align-self-center col-sm-1">To:</span>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-100 me-4 mt-2 small-field">
+          <input matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row ms-4">
+        <span class="align-self-center col-sm-1">From:</span>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-100 me-4 mt-2 small-field">
+            <input matInput type="text">
+          </mat-form-field>
+      </div>
+      <div class="d-flex flex-row ms-4">
+        <span class="align-self-center col-sm-1">CC:</span>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-100 me-4 mt-2 small-field">
+          <input matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row ms-4">
+        <span class="align-self-center col-sm-1">Subject:</span>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-100 me-4 mt-2 small-field">
+          <input matInput type="text">
+        </mat-form-field>
+      </div>
+      <div class="ms-4 me-4 mb-3">
+          <label>Text</label>
+          <quill-editor [modules]="quillConfig" [styles]="quillStyle"></quill-editor>
+      </div>
+
+      <div class="row ms-4">
+        <button class="btn w-auto btn-primary" routerLink="/email/main">send</button>
+        <button class="ms-2 btn w-auto btn-secondary" routerLink="/email/main">save as draft</button>
+        <button class="ms-2 button-content" routerLink="/email/main">cancel</button>
+      </div>
+
+    </mat-card>
+  </div>
+</body>

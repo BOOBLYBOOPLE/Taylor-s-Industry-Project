@@ -1,16 +1,14 @@
-<body>
-
-<div>
-    <h1>Inbox</h1>
-</div>
+<body class="body-padding">
+  <div class="ms-2 mt-2">
+      <h1>Inbox</h1>
+  </div>
   <div>
-  <mat-form-field class="mat-input-element" appearance="outline">
+  <mat-form-field class=""  appearance="outline">
     <mat-label>
       Search
     </mat-label>
   <input matInput>
   </mat-form-field>
-    <button mat-icon-button class="ms-2"><mat-icon>more_vert</mat-icon></button>
     <button routerLink="compose" class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">
       <i class="fa fa-plus-circle"></i>Compose
     </button>
@@ -50,11 +48,28 @@
       <td mat-cell *matCellDef="let element">
         <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
           <mat-menu #menu="matMenu">
-            <button class="md-button" mat-menu-item><span>View</span></button>
+            <button class="md-button" routerLink="view" mat-menu-item>
+              <mat-icon color="accent">visibility</mat-icon>
+              <span>View</span>
+            </button>
+            <button class="md-button" mat-menu-item routerLink="compose">
+              <mat-icon>reply</mat-icon>
+              <span>Reply</span>
+            </button>
             <mat-divider></mat-divider>
-            <button class="md-button" mat-menu-item><span>Edit</span></button>
+            <button class="md-button" mat-menu-item>
+              <mat-icon color="primary">star</mat-icon>
+              <span>Mark As Important</span>
+            </button>
             <mat-divider></mat-divider>
-            <button class="md-button" mat-menu-item><span>Report</span></button>
+            <button class="md-button" mat-menu-item>
+              <mat-icon>warning</mat-icon>
+              <span>Mark As Spam</span>
+            </button>
+            <button class="md-button" mat-menu-item>
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Send To Trash</span>
+            </button>
           </mat-menu>
       </td>
     </ng-container>

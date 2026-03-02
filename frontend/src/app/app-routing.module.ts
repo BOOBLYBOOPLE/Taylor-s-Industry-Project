@@ -38,6 +38,7 @@ import { FormsAddComponent } from './page/forms/forms-add/forms-add.component';
 import { DocumentationComponent } from './components/documentation/documentation.component';
 import { ReportBugsComponent } from './components/report-bugs/report-bugs.component';
 import { EmailAddComponent } from './page/email/email-add/email-add.component';
+import { EmailViewComponent } from './page/email/email-view/email-view.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -97,7 +98,7 @@ const routes: Routes = [
     children: [
       {path: 'main', component: EmailComponent},
       {path: 'main/compose', component: EmailAddComponent},
-      {path: 'main/view', component: EmailAddComponent}
+      {path: 'main/view', component: EmailViewComponent}
     ]
    },
   { path: 'chat',

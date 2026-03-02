@@ -19,7 +19,7 @@ export class EmployeeAddComponent implements OnInit {
   public apiUrl = globalEnv.apiUrl;
   public employeeAddForm!: FormGroup;
 
-    public quillStyle = {
+  public quillStyle = {
     'width': '100%',
     'min-height': '200px',
     'display': 'block',

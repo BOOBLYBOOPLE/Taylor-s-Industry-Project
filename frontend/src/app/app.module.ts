@@ -157,7 +157,8 @@ import { EmailViewComponent } from './page/email/email-view/email-view.component
     QuillModule,
     DatePipe,
     NgxMatTimepickerModule,
-    GridModule, PagerModule,
+    GridModule,
+    PagerModule,
 ],
   providers: [
     {

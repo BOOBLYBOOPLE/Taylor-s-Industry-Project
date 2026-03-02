@@ -60,6 +60,15 @@ router.get('/admin', auth, auth.adminOnly, (req, res) => {
   }
 );
 
+router.get('/all', auth, async(req, res) => {
+    try{
+        const users = await user.find({ _id: { $ne: req.user.id } }).select('username _id');
+        res.json(users);
+    } catch (err){
+        res.status(500).json({ error: err.message });
+    }
+});
+
 router.put('/change-password', auth, async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
