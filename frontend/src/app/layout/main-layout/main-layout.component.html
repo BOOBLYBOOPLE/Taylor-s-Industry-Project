@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidebar-container">
+<mat-sidenav-container class="sidebar-container" autosize>
   <mat-sidenav #sidenav mode="side" opened>
     <mat-toolbar class="sidebar-header">
       <span class="col-10">Menu</span>
@@ -127,7 +127,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content style="margin: 0px;">
+  <mat-sidenav-content>
     <mat-toolbar class="toolbar">
       <button matTooltip="Toggle Sidebar" mat-icon-button (click)="toggleSideNav()">
         <mat-icon >menu</mat-icon>

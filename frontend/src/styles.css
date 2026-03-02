@@ -132,7 +132,47 @@ td, tr
   background: rgb(226, 223, 210);
 }
 
+.received_msg {
+      display: inline-block;
+      padding: 0 0 0 10px;
+      vertical-align: top;
+      width: 92%;
+     }
+
+.received_withd_msg p {
+      background: #e4e8fb none repeat scroll 0 0;
+      border-radius: 3px;
+      color: #646464;
+      font-size: 14px;
+      margin: 0;
+      padding: 5px 10px 5px 12px;
+      width: 100%;
+    }
+
+.time_date {
+      color: #747474;
+      display: block;
+      font-size: 10px;
+      margin: 3px 0 0;
+    }
+.received_withd_msg { width: 70%;}
+    /* https://wpdean.com/css-chat-box/ */
+
+.small-field {
+  --mat-form-field-container-height: 40px; /* Reduces the total height */
+  --mat-form-field-container-vertical-padding: 4px; /* Shrinks internal space */
+  font-size: 14px;
+}
+
+/* Adjust the label position to stay centered in a smaller box */
+.small-field .mat-mdc-form-field-infix {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  min-height: 40px !important;
+}
+
 .sidebar-container {
+  position: absolute;
   width: 100%;
   height: 100%;
 }
@@ -443,6 +483,7 @@ footer a {
 }
 
 .md-button{
+  display: flex;
   align-items: center;
   justify-content: center;
   min-width: 80px;
@@ -660,6 +701,10 @@ button:active{
 
 .scroll-item{
   height: 25px;
+}
+
+.chat-button-background{
+  background-color: white;
 }
 
 /* Responsive Styles */

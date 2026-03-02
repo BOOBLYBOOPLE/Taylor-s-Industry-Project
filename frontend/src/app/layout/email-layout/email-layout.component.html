@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidebar-container">
+<mat-sidenav-container class="sidebar-container" autosize>
   <mat-sidenav #sidenav mode="side" opened>
     <mat-toolbar class="sidebar-header">
       <button style="margin-left: 0px;" mat-icon-button routerLink="/home" matTooltip="go back to main page">
@@ -7,6 +7,10 @@
     </mat-toolbar>
 
     <mat-nav-list class="sidebar-sidenav-content card-center">
+      <button class="md-button" mat-list-item routerLink="">
+        <i class="fa fa-mail-bulk"></i>
+        <span>  All</span>
+      </button>
       <button class="md-button" mat-list-item routerLink="">
         <i class="fa fa-envelope"></i>
         <span>  Inbox</span>
@@ -39,7 +43,7 @@
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <label>AHHHHHHHHHHHHHHHHHHHHH</label>
+      <label>Email</label>
       <span class="spacer"></span>
       <button mat-icon-button>
         <mat-icon>report</mat-icon>
