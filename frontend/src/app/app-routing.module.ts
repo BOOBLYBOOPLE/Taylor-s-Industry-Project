@@ -97,8 +97,10 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {path: 'main', component: EmailComponent},
-      {path: 'main/compose', component: EmailAddComponent},
-      {path: 'main/view', component: EmailViewComponent}
+      {path: 'main/:id', component: EmailComponent},
+      {path: 'compose', component: EmailAddComponent},
+      {path: 'view', component: EmailViewComponent},
+      {path: 'view/:id', component: EmailViewComponent}
     ]
    },
   { path: 'chat',

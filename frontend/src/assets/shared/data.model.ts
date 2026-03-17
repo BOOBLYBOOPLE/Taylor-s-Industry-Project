@@ -10,6 +10,23 @@ export class employeeDataModel{
   ){}
 }
 
+export class emailDataModel{
+  constructor(
+    public userID: string,
+    public sender: string,
+    public recipient: string,
+    public subject: string,
+    public content: string,
+    public draft: boolean,
+    public important: boolean,
+    public trashed: boolean,
+    public spam: boolean,
+    public sent: boolean,
+    public received: boolean,
+    public sendDate: Date
+  ){}
+}
+
 export class payrollDataModel{
   constructor(
     public date: Date,
