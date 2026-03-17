@@ -7,31 +7,31 @@
     </mat-toolbar>
 
     <mat-nav-list class="sidebar-sidenav-content card-center">
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('all')" mat-list-item>
         <i class="fa fa-mail-bulk"></i>
         <span>  All</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('inbox')" mat-list-item>
         <i class="fa fa-envelope"></i>
         <span>  Inbox</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('draft')" mat-list-item>
         <i class="fa fa-clipboard"></i>
         <span>  Draft</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('important')" mat-list-item>
         <i class="fa fa-exclamation"></i>
         <span>  Important</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('sent')" mat-list-item>
         <i class="fa fa-paper-plane"></i>
         <span>  Sent</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('spam')" mat-list-item>
         <i class="fa fa-exclamation-triangle"></i>
         <span>  Spam</span>
       </button>
-      <button class="md-button" mat-list-item routerLink="">
+      <button class="md-button" (click)="sendFilter('trash')" mat-list-item>
         <i class="fa fa-trash"></i>
         <span>  Trash</span>
       </button>

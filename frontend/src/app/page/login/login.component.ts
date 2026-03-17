@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit{
       this.auth.login(this.form.value).subscribe({
         next: responseData => {
           this.auth.saveToken(responseData.token);
+          localStorage.setItem('user', JSON.stringify(responseData.user))
           const role = responseData.user.role;
           this.router.navigate(['/home']);
         },
