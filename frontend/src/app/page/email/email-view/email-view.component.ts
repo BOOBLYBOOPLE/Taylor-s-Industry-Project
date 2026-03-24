@@ -15,23 +15,23 @@ export class EmailViewComponent implements OnInit{
   public apiUrl = globalEnv.apiUrl;
 
   public emailData: any = {};
-  public sender = "someone";
-  public recipient: any;
-  public CC: any;
-  public subject= "something";
-  public content= "fwfaw;flfawl,fawelf,aw";
 
   constructor(
     public http: HttpClient,
     public webService: webService,
-    public activatedRoute: ActivatedRoute
+    public router: ActivatedRoute,
+    public route: Router
   ){}
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    const id = this.router.snapshot.paramMap.get('id');
     if(id) {
       this.getEmail(id);
     }
+  }
+
+  composeEmail(){
+      this.route.navigate(['/email/compose', this.emailData._id]);
   }
 
   getEmail(id: string): void {

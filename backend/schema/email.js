@@ -11,6 +11,7 @@ const emailSchema = new mongoose.Schema({
     subject: {type: String, required: true},
     content: {type: String, required: true},
     draft: {type: Boolean},
+    cc: {type: String},
     important: {type: Boolean},
     trashed: {type: Boolean},
     spam: {type: Boolean},

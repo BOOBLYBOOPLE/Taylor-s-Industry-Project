@@ -17,9 +17,10 @@ import { DataService } from 'src/assets/services/data.service';
 
 export class EmailComponent implements OnInit{
   public panelOpenState = false;
-  public displayedColumns: string[] = ['position', 'from', 'to', 'subject', 'date', 'actions'];
+  public displayedColumns: string[] = ['position', 'from', 'to', 'subject', 'date', 'tags', 'actions'];
   public dataSource = new MatTableDataSource<emailDataModel>([]);
   public filterData: any;
+  public senderData: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -36,20 +37,20 @@ export class EmailComponent implements OnInit{
   ngOnInit(): void {
   this.syncEmails();
 
-  this.getEmailList(this.filterData || 'all');
+  this.getEmailList(this.filterData || 'All Emails');
 
   this.data.data$.subscribe(filter => {
     this.filterData = filter;
     this.getEmailList(filter);
   });
-
 }
+
 
   getEmailList(filter?: string) {
     this.webService.webServiceRetrieve(`${this.apiURL}/emails`).subscribe({
       next: (res: any) => {
         const emailData = res as any[];
-        if (filter && filter !== 'all') {
+        if (filter && filter !== 'All Emails') {
           this.dataSource.data = this.applyFilterLogic(emailData, filter);
         } else {
           this.dataSource.data = emailData;
@@ -107,7 +108,28 @@ markFilter(filter: string, id: string, index: number, reverse: boolean) {
     this.router.navigate(['/email/view', id]);
   }
 
-  composeEmail(){
-    this.router.navigate(['/email/compose']);
+  composeEmail(id: any){
+    if(id)
+      this.router.navigate(['/email/compose', id]);
+    else
+      this.router.navigate(['/email/compose']);
+  }
+
+  refreshPage(){
+    window.location.reload();
+  }
+
+  deleteEmail(id: any){
+    if(confirm("Delete Email?")){
+      console.log(id);
+      this.webService.webServiceDelete(`${this.apiURL}/emails/${id}`, {}).subscribe({
+        next: responseData => {
+          console.log(responseData);
+          this.refreshPage();
+        }, error: err => {
+          console.error(err);
+        }
+      });
+    }
   }
 }

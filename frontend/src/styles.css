@@ -133,11 +133,17 @@ td, tr
 }
 
 .received_msg {
-      display: inline-block;
+      display: flex;
       padding: 0 0 0 10px;
       vertical-align: top;
-      width: 92%;
      }
+
+.sent_msg {
+  display: flex;
+  justify-content: end;
+  padding: 0 0 0px 10px;
+  vertical-align: top;
+}
 
 .received_withd_msg p {
       background: #e4e8fb none repeat scroll 0 0;
@@ -149,13 +155,25 @@ td, tr
       width: 100%;
     }
 
+.sent_withd_msg p {
+    display: flex;
+      background: lightblue none repeat scroll 0 0;
+      border-radius: 3px;
+      color: #646464;
+      font-size: 14px;
+      margin: 0;
+      justify-content: end;
+      padding: 5px 10px 5px 12px;
+      width: 100%;
+}
+
 .time_date {
       color: #747474;
       display: block;
       font-size: 10px;
       margin: 3px 0 0;
     }
-.received_withd_msg { width: 70%;}
+.received_withd_msg, .sent_withd_msg { width: 70%;}
     /* https://wpdean.com/css-chat-box/ */
 
 .small-field {

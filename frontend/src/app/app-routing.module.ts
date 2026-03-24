@@ -99,6 +99,7 @@ const routes: Routes = [
       {path: 'main', component: EmailComponent},
       {path: 'main/:id', component: EmailComponent},
       {path: 'compose', component: EmailAddComponent},
+      {path: 'compose/:id', component: EmailAddComponent},
       {path: 'view', component: EmailViewComponent},
       {path: 'view/:id', component: EmailViewComponent}
     ]

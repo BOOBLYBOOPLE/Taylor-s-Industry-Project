@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Data, Router, ActivatedRoute } from '@angular/router';
 import { webService } from 'src/assets/services/webServices';
 import { globalEnv } from 'src/assets/shared/global-env.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DataService } from 'src/assets/services/data.service';
 
 @Component({
   selector: 'app-email-add',
@@ -12,13 +13,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class EmailAddComponent implements OnInit {
 
- public apiURL = globalEnv.apiUrl;
+  public apiURL = globalEnv.apiUrl;
   public emailForm!: FormGroup;
-  public recipient: any;
-  public sender: any;
-  public CC: any;
-  public subject: any;
-  public content: any;
 
     public quillStyle = {
     'width': '100%',
@@ -28,24 +24,29 @@ export class EmailAddComponent implements OnInit {
   }
   public quillConfig = {
   toolbar: [
-      ['bold', 'italic', 'underline', 'strike'], // basic formatting
+      ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // header dropdown
-      [{ 'color': [] }, { 'background': [] }], // color options
-      ['link', 'image', 'video'], // embeds
-      ['clean'] // remove formatting button
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['link', 'image', 'video'],
+      ['clean']
     ]
   };
+
+  public emailID: any;
 
   constructor(
     public http: HttpClient,
     public router: Router,
     public webService: webService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public data: DataService,
+    public route: ActivatedRoute
   ){}
   public user = JSON.parse(localStorage.getItem('user') || '{}');
+  public draftData: any;
 
   ngOnInit(): void {
     this.emailForm = this.fb.group({
@@ -53,9 +54,38 @@ export class EmailAddComponent implements OnInit {
       sender: new FormControl(this.user.email, Validators.required),
       userId: new FormControl(this.user.id, Validators.required),
       subject: new FormControl(null, Validators.required),
+      cc: new FormControl(null),
       content: new FormControl(null, Validators.required),
       sendDate: new FormControl(new Date())
     });
+
+    this.emailID = this.route.snapshot.paramMap.get('id');
+
+    if(this.emailID)
+      this.reply(this.emailID);
+  }
+
+  reply(id: any){
+    this.webService.webServiceRetrieve(`${this.apiURL}/emails/${id}`).subscribe({
+      next: responseData => {
+        this.draftData = responseData;
+        if(this.draftData.draft){
+          this.emailForm.patchValue({
+            recipient: this.draftData.recipient,
+            sender: this.draftData.sender,
+            userId: this.draftData.userId,
+            subject: this.draftData.subject,
+            cc: this.draftData.cc,
+            content: this.draftData.content,
+          });
+        } else{
+          this.emailForm.patchValue({
+            recipient: this.draftData.sender,
+            subject: ("RE: " + this.draftData.subject)
+          });
+        }
+      }
+    })
   }
 
   sendEmail(){
@@ -65,6 +95,7 @@ export class EmailAddComponent implements OnInit {
       recipient: this.emailForm.value.recipient,
       sender: this.emailForm.value.sender,
       subject: this.emailForm.value.subject,
+      cc: this.emailForm.value.cc,
       content: this.emailForm.value.content,
       sendDate: new Date().getTime()
     }
@@ -83,18 +114,27 @@ export class EmailAddComponent implements OnInit {
       userId: this.user.id,
       recipient: this.emailForm.value.recipient,
       sender: this.emailForm.value.sender,
+      cc: this.emailForm.value.cc,
       subject: this.emailForm.value.subject,
       content: this.emailForm.value.content,
       sendDate: new Date().getTime()
     }
 
-    this.webService.webServiceCreate(`${this.apiURL}/emails/draft`, data).subscribe({
-      next: () => {
-        alert('drafted');
-        this.router.navigate(['/email/main']);
-      },
-      error: (err) => console.error(err)
-    });
+    if(this.draftData.draft){
+      this.webService.webServiceUpdate(`${this.apiURL}/emails/${this.emailID}`, data).subscribe({
+        next: responseData => {
+          console.log(responseData);
+        }
+      });
+    } else{
+      this.webService.webServiceCreate(`${this.apiURL}/emails/draft`, data).subscribe({
+        next: () => {
+          alert('drafted');
+          this.router.navigate(['/email/main']);
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 
 }
