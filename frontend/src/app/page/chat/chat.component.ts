@@ -16,9 +16,12 @@ export class ChatComponent implements OnInit {
   message = '';
   messages: { username: string, message: string }[] = [];
   users: string[] = [];
+  chatName: any;
   typingUsers: Set<string> = new Set();
   joined = false;
   public apiUrl = globalEnv.apiUrl;
+  public currentUser: any;
+  public uehhh: any;
 
   constructor(
     public authService: AuthService,
@@ -26,7 +29,10 @@ export class ChatComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    this.socket = io(this.apiUrl);
+    this.currentUser = JSON.parse(localStorage.getItem("user")|| "{}");
+    this.username = this.currentUser.username;
+
+    this.socket = io('http://localhost:5000');
 
     this.socket.on('chat message', (msg: { username: string, message: string }) => {
       this.messages.push(msg);
@@ -52,11 +58,21 @@ export class ChatComponent implements OnInit {
       this.typingUsers.delete(username);
     });
 
+    this.socket.on('message history', (history: any[]) => {
+      this.messages = history.map(m => ({
+        username: m.senderName,
+        message: m.content
+      }));
+                    console.log(this.messages);
+    });
+
     this.chatService.selectedUser$.subscribe(targetUser => {
       if (targetUser) {
+        this.chatName = targetUser.username;
         this.startChat(targetUser);
       }
     });
+
   }
 
   join() {
@@ -68,18 +84,18 @@ export class ChatComponent implements OnInit {
 
 startChat(targetUser: any) {
   const myId = this.authService.getUserId();
-
   const roomId = [myId, targetUser._id].sort().join('_');
 
   if (!myId || !targetUser._id) return;
 
   this.currentRoom = roomId;
-  this.messages = []; // Clear current view
+  this.messages = [];
 
   this.socket.emit('join', {
     roomId: this.currentRoom,
     username: this.username
   });
+      console.log(this.currentRoom);
 }
 
   joinPrivateChat(otherUserId: string){
@@ -93,7 +109,8 @@ startChat(targetUser: any) {
     if (this.message.trim() && this.currentRoom) {
       this.socket.emit('chat message', {
         roomId: this.currentRoom,
-        content: this.message
+        content: this.message,
+        senderId: this.authService.getUserId()
       });
       this.message = '';
       this.socket.emit('stop typing');

@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const auth = require('../middleware/auth');
 const path = require('path');
-const { Server } = require('socket.io');
 const http = require('http');
-const { AttendanceScore, AttendanceList } = require('../schema/attendance');
 const Employee = require('../schema/employee');
 const User = require('../schema/user');
 const Message = require('../schema/chat');
+const { Server } = require('socket.io');
+const { AttendanceScore, AttendanceList } = require('../schema/attendance');
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,7 +20,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors:{
-    origin: PORT,
+    origin: "http://localhost:4200",
     methods: ["GET", "POST"]
   }
 });
@@ -45,12 +46,13 @@ io.on('connection', (socket) => {
     socket.to(roomId).emit('user joined', username)
   });
 
-  socket.on('chat message', async ({ roomId, msg }) => {
+  socket.on('chat message', async ({ roomId, content, senderId }) => {
     try{
       const newMessage = await Message.create({
         room: roomId,
+        sender: senderId,
         senderName: socket.data.username,
-        content: msg,
+        content: content,
         timestamp: new Date()
       });
 
@@ -134,14 +136,10 @@ const cleanUpAndExit = async (signal) => {
 process.on('SIGINT', () => cleanUpAndExit('SIGINT'));
 process.on('SIGTERM', () => cleanUpAndExit('SIGTERM'));
 
-
-
 mongoose.connection.once('open', () => {
   initializeDailyAttendance();
 });
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    server.listen(PORT, () => console.log(`Both Server running on port ${PORT}`));
   }).catch(err => console.error(err));
-
-server.listen(PORT, () => console.log("running chat server"));

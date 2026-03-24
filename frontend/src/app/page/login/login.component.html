@@ -25,7 +25,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (keyup.enter)="onSubmit()">
           <button mat-icon-button matSuffix (click)="hide = !hide"
             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

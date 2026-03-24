@@ -9,8 +9,8 @@
     <div class="row ms-4">
       <span><p>From: {{ emailData.sender }}</p></span>
     </div>
-    <div class="row ms-4">
-      <span>CC: </span>
+    <div *ngIf="emailData.cc" class="row ms-4">
+      <span>CC: {{emailData.cc}}</span>
     </div>
     <div class="mb-3 mt-2 ms-4 me-4">
       <label class="fw-bold text-muted mb-2">Content:</label>
@@ -18,7 +18,7 @@
     </div>
     <div class="ms-4 mb-4">
       <button class="button-content" routerLink="/email/main">back</button>
-      <button class="button-content ms-2" routerLink="/email/main/compose">reply</button>
+      <button class="button-content ms-2" *ngIf="emailData.sent === false" (click)="composeEmail()">reply</button>
     </div>
 
   </mat-card>

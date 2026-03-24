@@ -1,16 +1,16 @@
 <body class="body-padding">
   <div class="ms-2 mt-2">
-    <h1>{{ (this.filterData | titlecase) ?? "Emails"}}</h1>
+    <h1>{{ (this.filterData | titlecase) ?? "All Emails"}}</h1>
     <mat-form-field class=""  appearance="outline">
       <mat-label>
         Search
       </mat-label>
       <input matInput>
     </mat-form-field>
-    <button (click)="composeEmail()"  class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">
+    <button (click)="composeEmail(null)"  class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">
       <i class="fa fa-plus-circle"></i>Compose
     </button>
-    <button class="ms-2 button-3"><i class="fa fa-refresh"></i></button>
+    <button class="ms-2 button-3" (click)="refreshPage()"><i class="fa fa-refresh"></i></button>
   </div>
 
 
@@ -42,6 +42,18 @@
       <td mat-cell *matCellDef="let element"> {{element.sendDate | date: 'mediumDate'}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="tags">
+      <th mat-header-cell *matHeaderCellDef> Tag </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon matTooltip="Important" *ngIf="element.important === true">star</mat-icon>
+        <mat-icon matTooltip="Trash" *ngIf="element.trashed === true">delete</mat-icon>
+        <mat-icon matTooltip="Spam" *ngIf="element.spam === true">warning</mat-icon>
+        <mat-icon matTooltip="Received" *ngIf="element.received === true">forward_to_inbox</mat-icon>
+        <mat-icon matTooltip="Sent" *ngIf="element.sent === true">send</mat-icon>
+        <mat-icon matTooltip="Draft" *ngIf="element.draft === true">save_as</mat-icon>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element; let i = index">
@@ -51,9 +63,13 @@
               <mat-icon color="accent">visibility</mat-icon>
               <span>View</span>
             </button>
-            <button class="md-button" mat-menu-item routerLink="compose">
+            <button class="md-button" (click)="composeEmail(element._id)" *ngIf="element.received === true" mat-menu-item>
               <mat-icon>reply</mat-icon>
               <span>Reply</span>
+            </button>
+            <button class="md-button" *ngIf="element.draft === true" (click)="composeEmail(element._id)" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Resume Draft</span>
             </button>
             <mat-divider></mat-divider>
             <button *ngIf="element.important === false" (click)="markFilter('important', element._id, i, false)" class="md-button" mat-menu-item>
@@ -77,13 +93,13 @@
               <mat-icon color="warn">delete</mat-icon>
               <span>Send To Trash</span>
             </button>
-            <button *ngIf="element.trashed === true" class="md-button" mat-menu-item>
-              <mat-icon color="warn">delete</mat-icon>
-              <span>Delete Permenantly</span>
-            </button>
             <button *ngIf="element.trashed === true" (click)="markFilter('trash', element._id, i, true)" class="md-button" mat-menu-item>
               <mat-icon color="primary">undo</mat-icon>
-              <span>Remove To Trash</span>
+              <span>Remove From Trash</span>
+            </button>
+            <button *ngIf="element.trashed === true" (click)="deleteEmail(element._id)" class="md-button" mat-menu-item>
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete Permenantly</span>
             </button>
           </mat-menu>
       </td>

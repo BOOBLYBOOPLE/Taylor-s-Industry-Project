@@ -27,14 +27,14 @@ export class EmployeeAddComponent implements OnInit {
   }
   public quillConfig = {
   toolbar: [
-      ['bold', 'italic', 'underline', 'strike'], // basic formatting
+      ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // header dropdown
-      [{ 'color': [] }, { 'background': [] }], // color options
-      ['link', 'image', 'video'], // embeds
-      ['clean'] // remove formatting button
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['link', 'image', 'video'],
+      ['clean']
     ]
   };
 

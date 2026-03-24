@@ -123,7 +123,7 @@ router.post('/sync', async (req, res) => {
 });
 
 router.post('/send', async(req, res) => {
-    const { recipient, userId, subject, content } = req.body;
+    const { recipient, userId, subject, cc, content } = req.body;
 
     try{
         const foundUser = await user.findById(userId);
@@ -143,6 +143,7 @@ router.post('/send', async(req, res) => {
         const mailOptions = {
             from: userEmail,
             to: recipient,
+            cc: cc,
             subject: subject,
             text: content,
             html: content
@@ -154,6 +155,7 @@ router.post('/send', async(req, res) => {
             recipient: recipient,
             sender: userEmail,
             subject: subject,
+            cc: cc,
             content: content,
             sendDate: new Date(),
             sent: true,
@@ -167,6 +169,15 @@ router.post('/send', async(req, res) => {
         res.status(200).json({message:'email sent' });
     } catch (error) {
         res.status(500).json({error: error.message});
+    }
+});
+
+router.delete("/:id", async(req, res) => {
+    try{
+        await email.findByIdAndDelete(req.params.id);
+        res.json({message: "Deleted"});
+    } catch {
+        res.json({message: error.message});
     }
 });
 
