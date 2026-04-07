@@ -1,49 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { io } from 'socket.io-client';
 import { AuthService } from 'src/assets/services/auth.service';
 import { ChatService } from './chatService.component';
 import { globalEnv } from 'src/assets/shared/global-env.component';
 
 @Component({
   selector: 'app-chat',
-  templateUrl: './chat.component.html',
+  templateUrl: './chat.component.html'
 })
 export class ChatComponent implements OnInit {
 
-  currentRoom :any;
+  currentRoom: any;
   socket: any;
   username = '';
   message = '';
-  messages: { username: string, message: string }[] = [];
+  messages: {
+    _id?: string,
+    username: string,
+    message: string,
+    hover: boolean }[] = [];
   users: string[] = [];
   chatName: any;
   typingUsers: Set<string> = new Set();
   joined = false;
+  targetUserId!: string;
   public apiUrl = globalEnv.apiUrl;
   public currentUser: any;
-  public uehhh: any;
+  public isEditing = false;
+  public editMessageId: string | null = null;
+  public currentTargetedUser: any;
 
   constructor(
     public authService: AuthService,
     public chatService: ChatService
-  ){}
+  ) {}
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem("user")|| "{}");
+    this.currentUser = JSON.parse(localStorage.getItem("user") || "{}");
     this.username = this.currentUser.username;
 
-    this.socket = io('http://localhost:5000');
+    // Use the shared socket from the service
+    this.socket = this.chatService.socket;
 
-    this.socket.on('chat message', (msg: { username: string, message: string }) => {
-      this.messages.push(msg);
-    });
+    // Register user for private notifications
+    this.socket.emit('register-user', this.currentUser._id);
 
-    this.socket.on('user joined', (username: string) => {
-      this.messages.push({ username: 'System', message: `${username} has joined the chat` });
-    });
-
-    this.socket.on('user left', (username: string) => {
-      this.messages.push({ username: 'System', message: `${username} has left the chat` });
+    // Listen for messages (Only one listener needed!)
+    this.socket.on('chat message', (msg: any) => {
+      this.messages.push({
+        _id: msg._id,
+        username: msg.username,
+        message: msg.message,
+        hover: false
+      });
     });
 
     this.socket.on('user list', (userList: string[]) => {
@@ -60,49 +68,76 @@ export class ChatComponent implements OnInit {
 
     this.socket.on('message history', (history: any[]) => {
       this.messages = history.map(m => ({
+        _id: m._id,
         username: m.senderName,
-        message: m.content
+        message: m.content,
+        hover: m.hover || false
       }));
-                    console.log(this.messages);
     });
 
+    this.socket.on('message edited', (data: { messageId: string, newContent: string}) => {
+      const msgIndex = this.messages.findIndex(m => m._id === data.messageId);
+      if(msgIndex !== -1){
+        this.messages[msgIndex].message = data.newContent;
+      }
+    });
+
+    this.socket.on('message deleted', (messageId: string) => {
+      this.messages = this.messages.filter(m => m._id !== messageId);
+    });
+
+    // Subscribe to user selection from the sidebar
     this.chatService.selectedUser$.subscribe(targetUser => {
       if (targetUser) {
         this.chatName = targetUser.username;
+        this.targetUserId = targetUser._id;
         this.startChat(targetUser);
       }
     });
 
   }
 
-  join() {
-    if (this.username.trim()) {
-      this.socket.emit('join', this.username);
-      this.joined = true;
+  prepareEdit(msg: any){
+    this.message = msg.message;
+    this.editMessageId = msg._id;
+    this.isEditing = true;
+  }
+
+  submitEdit(){
+    if(this.message.trim() && this.editMessageId && this.currentRoom){
+      this.socket.emit('edit message', {
+        messageId: this.editMessageId,
+        roomId: this.currentRoom,
+        newContent: this.message
+      });
+      this.cancelEdit();
+      this.startChat(this.currentTargetedUser);
     }
   }
 
-startChat(targetUser: any) {
-  const myId = this.authService.getUserId();
-  const roomId = [myId, targetUser._id].sort().join('_');
+  cancelEdit(){
+    this.message = '';
+    this.isEditing = false;
+    this.editMessageId = null;
+  }
 
-  if (!myId || !targetUser._id) return;
+  startChat(targetUser: any) {
+    this.currentTargetedUser = targetUser;
+    const myId = this.authService.getUserId();
+    const roomId = [myId, targetUser._id].sort().join('_');
 
-  this.currentRoom = roomId;
-  this.messages = [];
+    if (!myId || !targetUser._id) return;
 
-  this.socket.emit('join', {
-    roomId: this.currentRoom,
-    username: this.username
-  });
-      console.log(this.currentRoom);
-}
-
-  joinPrivateChat(otherUserId: string){
-    const myId = '';
-    const roomId = [myId, otherUserId].sort().join('_');
     this.currentRoom = roomId;
-    this.socket.emit('join', )
+    this.messages = [];
+
+    // Send IDs so the server knows who is in the chat to clear unread counts
+    this.socket.emit('join', {
+      roomId: this.currentRoom,
+      username: this.username,
+      userId: myId,
+      targetUserId: targetUser._id
+    });
   }
 
   sendMessage() {
@@ -110,19 +145,24 @@ startChat(targetUser: any) {
       this.socket.emit('chat message', {
         roomId: this.currentRoom,
         content: this.message,
-        senderId: this.authService.getUserId()
+        senderId: this.authService.getUserId(),
+        recipientId: this.targetUserId
       });
       this.message = '';
       this.socket.emit('stop typing');
     }
   }
-
-  onTyping() {
-    this.socket.emit('typing');
+  deleteMessage(msg: any){
+    if(msg._id && this.currentRoom){
+      this.socket.emit('delete message', {
+        messageId: msg._id,
+        roomId: this.currentRoom
+      });
+    }
   }
 
-  onStopTyping() {
-    this.socket.emit('stop typing');
-  }
-
+  goIn(msg: any) { msg.hover = true; }
+  goOut(msg: any) { msg.hover = false; }
+  onTyping() { this.socket.emit('typing'); }
+  onStopTyping() { this.socket.emit('stop typing'); }
 }
