@@ -20,6 +20,9 @@
                 <span class="text-start text-muted small">Click to chat</span>
               </div>
             </div>
+            <span *ngIf="((chatService.unreadCounts$ | async)?.[user._id] ?? 0) > 0" class="badge rounded-pill bg-success me-2">
+              {{ (chatService.unreadCounts$ | async)?.[user._id] }}
+            </span>
           </div>
         </button>
     </div>

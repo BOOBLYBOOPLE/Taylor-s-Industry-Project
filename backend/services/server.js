@@ -26,7 +26,7 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  socket.on('join', async ({roomId, username}) => {
+  socket.on('join', async ({roomId, username, userId, targetUserId}) => {
 
     socket.data.username = username;
     const currentRooms = Array.from(socket.rooms);
@@ -43,23 +43,46 @@ io.on('connection', (socket) => {
     } catch(err){
       console.error("Error loading history:", err);
     }
+
+    try{
+      await Message.updateMany(
+        { room: roomId, sender: targetUserId, read: false },
+        { $set: { read :true } }
+      );
+      io.to(roomId).emit('messages-marked-read', { roomId, readBy: userId});
+    } catch (error) {
+      console.error(error);
+    }
+
     socket.to(roomId).emit('user joined', username)
   });
 
-  socket.on('chat message', async ({ roomId, content, senderId }) => {
+  socket.on('register-user', (userId) => {
+    socket.join(userId);
+  });
+
+  socket.on('chat message', async ({ roomId, content, senderId, recipientId }) => {
     try{
       const newMessage = await Message.create({
         room: roomId,
+        recipient: recipientId,
         sender: senderId,
         senderName: socket.data.username,
         content: content,
-        timestamp: new Date()
+        timestamp: new Date(),
+        read: false
       });
 
       io.to(roomId).emit('chat message', {
         username: newMessage.senderName,
         message: newMessage.content,
         timestamp: newMessage.timestamp
+      });
+
+      io.to(recipientId).emit('new-notification', {
+        senderId: senderId,
+        roomId: roomId,
+        content: content
       });
     } catch (err) {
       console.error("Message save failed:", err);
@@ -71,6 +94,35 @@ io.on('connection', (socket) => {
       io.emit('user left', socket.data.username)
     }
   });
+
+  socket.on('edit message', async({ messageId, roomId, newContent }) => {
+    try{
+      const updatedMessage = await Message.findByIdAndUpdate(
+        messageId,
+        { content: newContent },
+        { new: true }
+      );
+
+      io.to(roomId).emit('message changed', 
+      {
+        messageId: updatedMessage._id,
+        newContent: updatedMessage.content
+      });
+    } catch (error){
+      console.error("jhkj", error);
+    }
+  });
+
+  socket.on('delete message', async({ messageId, roomId }) => {
+    try{
+      await Message.findByIdAndDelete(messageId);
+
+      io.to(roomId).emit('message deleted', messageId);
+    } catch(err){
+      console.error("bruh", err);
+    }
+  });
+
 });
 
 app.use(cors());
