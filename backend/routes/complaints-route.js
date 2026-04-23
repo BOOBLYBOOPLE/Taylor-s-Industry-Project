@@ -50,20 +50,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const updatedComplaint = await Complaints.findByIdAndUpdate(
-//       req.params.id,
-//       { $set: req.body }, 
-//       { new: true }
-//     );
-    
-//     if (!updatedComplaint) return res.status(404).json({ message: 'Complaint not found' });
-//     res.json(updatedComplaint);
-    
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
-
 module.exports = router;

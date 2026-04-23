@@ -138,6 +138,7 @@ app.use('/api/forms', require('../routes/forms-route'));
 app.use('/api/attendance', require('../routes/attendance-route'));
 app.use('/api/finance-analytics', require('../routes/finance-route'));
 app.use('/api/emails', require('../routes/email-route'));
+app.use('/api/calendar', require('../routes/calendar-route'));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 const initializeDailyAttendance = async () => {

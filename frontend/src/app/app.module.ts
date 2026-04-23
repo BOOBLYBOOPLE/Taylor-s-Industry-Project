@@ -76,6 +76,9 @@ import { ReportBugsComponent } from './components/report-bugs/report-bugs.compon
 import { EmailAddComponent } from './page/email/email-add/email-add.component';
 import { GridModule, PagerModule } from '@syncfusion/ej2-angular-grids';
 import { EmailViewComponent } from './page/email/email-view/email-view.component';
+import { PayrollFinanceAddComponent } from './page/payroll-finance/payroll-finance-add/payroll-finance-add.component';
+import { NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { AnalyticsGraphComponent } from './page/analytics/analytics-graph/analytics-graph.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +121,8 @@ import { EmailViewComponent } from './page/email/email-view/email-view.component
     ReportBugsComponent,
     EmailAddComponent,
     EmailViewComponent,
+    PayrollFinanceAddComponent,
+    AnalyticsGraphComponent,
   ],
   imports: [
     BrowserModule,
@@ -159,6 +164,7 @@ import { EmailViewComponent } from './page/email/email-view/email-view.component
     NgxMatTimepickerModule,
     GridModule,
     PagerModule,
+    NgbDropdownModule
 ],
   providers: [
     {

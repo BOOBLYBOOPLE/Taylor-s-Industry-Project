@@ -39,6 +39,8 @@ import { DocumentationComponent } from './components/documentation/documentation
 import { ReportBugsComponent } from './components/report-bugs/report-bugs.component';
 import { EmailAddComponent } from './page/email/email-add/email-add.component';
 import { EmailViewComponent } from './page/email/email-view/email-view.component';
+import { PayrollFinanceAddComponent } from './page/payroll-finance/payroll-finance-add/payroll-finance-add.component';
+import { AnalyticsGraphComponent } from './page/analytics/analytics-graph/analytics-graph.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,7 +55,7 @@ const routes: Routes = [
       { path: 'home', component: HomepageComponent },
       { path: 'info', component: DocumentationComponent },
       { path: 'report-bugs', component: ReportBugsComponent },
-      { path: 'debug', component: TestPageComponent },
+      // { path: 'debug', component: TestPageComponent },
 
       { path: 'employee', component: EmployeeComponent},
       { path: 'employee/add-employee', component: EmployeeAddComponent, canActivate: [adminGuard]},
@@ -65,7 +67,8 @@ const routes: Routes = [
       { path: 'payroll/add-payroll', component: PayrollAddComponent },
       { path: 'payroll/view-payroll', component: PayrollViewComponent },
       { path: 'payroll/view-payroll/:id', component: PayrollViewComponent },
-      { path: 'finance', component: PayrollFinanceComponent, canActivate: [adminGuard] },
+      // { path: 'finance', component: PayrollFinanceComponent, canActivate: [adminGuard] },
+      // { path: 'finance/add', component: PayrollFinanceAddComponent, canActivate: [adminGuard]},
 
       { path: 'attendance', component: AttendanceComponent, canActivate: [adminGuard] },
       { path: 'leaves', component: LeavesComponent, canActivate: [adminGuard] },
@@ -84,6 +87,7 @@ const routes: Routes = [
       { path: 'forms/view/:id', component: FormsViewComponent },
       { path: 'forms/add', component: FormsAddComponent },
       { path: 'analytics', component: AnalyticsComponent, canActivate: [adminGuard] },
+      { path: 'analytics/add', component: AnalyticsGraphComponent, canActivate: [adminGuard] },
       { path: 'complaints', component: ComplaintsComponent, canActivate: [adminGuard] },
       { path: 'complaints/add-complaints', component: CreateComplaintComponent },
       { path: 'complaints/view-complaints', component:  ViewComplaintComponent },

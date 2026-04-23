@@ -1,1 +1,21 @@
-<canvasjs-chart [options]="chartOptions" [styles]="{width: '75%'}"></canvasjs-chart>
+<div class="container">
+  <div class="header-actions">
+    <button class="md-button" routerLink="add">+ Add New Graph</button>
+  </div>
+
+  <div class="graph-grid">
+    <div *ngFor="let options of savedGraphs" class="graph-card">
+      <div class="chart-container">
+        <canvasjs-chart [options]="options" [styles]="{width: '100%', height: '300px'}"></canvasjs-chart>
+      </div>
+
+      <div class="card-actions">
+        <button
+          class="md-button"
+          (click)="deleteGraph(options.id)">
+          Delete Graph
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
