@@ -24,7 +24,7 @@
         <span>{{displayedColumns.employee}}</span>
       </button>
       <mat-divider></mat-divider>
-      <mat-expansion-panel *ngIf="isAdmin" (opened)="payrollPanelOpenState = true"
+      <!-- <mat-expansion-panel *ngIf="isAdmin" (opened)="payrollPanelOpenState = true"
                           (closed)="payrollPanelOpenState = false">
         <mat-expansion-panel-header class="md-expansion">
           <mat-panel-title>
@@ -32,16 +32,16 @@
             <span>{{displayedColumns.paynfin}}</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <button class="md-button" mat-list-item routerLink="/payroll" (click)="changeTitle(displayedColumns.payroll)">
-          <i class="fa fa-credit-card"></i>
-          <span>{{displayedColumns.payroll}}</span>
-        </button>
-        <mat-divider></mat-divider>
+
         <button class="md-button" mat-list-item routerLink="/finance" (click)="changeTitle(displayedColumns.finance)">
           <i class="fa fa-money-bill-1"></i>
           <span>{{displayedColumns.finance}}</span>
         </button>
-      </mat-expansion-panel>
+      </mat-expansion-panel> -->
+      <button class="md-button" mat-list-item routerLink="/payroll" (click)="changeTitle(displayedColumns.payroll)">
+        <i class="fa fa-credit-card"></i>
+        <span>{{displayedColumns.payroll}}</span>
+      </button>
       <mat-divider></mat-divider>
       <mat-expansion-panel (opened)="calendarPanelOpenState = true"
                     (closed)="calendarPanelOpenState = false">
@@ -119,11 +119,11 @@
         <span>{{displayedColumns.settings}}</span>
       </button>
       <mat-divider></mat-divider>
-      <button class="md-button" mat-list-item routerLink="/debug">
+      <!-- <button class="md-button" mat-list-item routerLink="/debug">
         <i class="fa fa-desktop"></i>
         <span>  DebugPage</span>
       </button>
-      <mat-divider></mat-divider>
+      <mat-divider></mat-divider> -->
     </mat-nav-list>
   </mat-sidenav>
 

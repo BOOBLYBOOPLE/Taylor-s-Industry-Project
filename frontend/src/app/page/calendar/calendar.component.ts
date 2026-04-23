@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { globalEnv } from 'src/assets/shared/global-env.component';
+import { webService } from 'src/assets/services/webServices';
 import 'dhtmlx-scheduler';
 
 declare let scheduler: any;
@@ -9,15 +11,22 @@ declare let scheduler: any;
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
+
 export class CalendarComponent implements OnInit, OnDestroy {
   @ViewChild("scheduler_here", { static: true }) schedulerContainer!: ElementRef;
+
+  public apiUrl = globalEnv.apiUrl;
+
+  constructor(
+    private web: webService
+  ){}
 
   ngOnInit() {
     scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 
     scheduler.init(
       this.schedulerContainer.nativeElement,
-      new Date(2026, 1, 24), // Feb 24, 2026
+      new Date(),
       "week"
     );
 
@@ -32,7 +41,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Clean up to prevent memory leaks
     if (scheduler.destructor) {
         scheduler.destructor();
     }
