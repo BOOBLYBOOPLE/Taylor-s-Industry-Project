@@ -13,11 +13,13 @@ export class ChatComponent implements OnInit {
   socket: any;
   username = '';
   message = '';
+  startingEditMessage = '';
   messages: {
     _id?: string,
     username: string,
     message: string,
-    hover: boolean }[] = [];
+    hover: boolean,
+    edited: boolean }[] = [];
   users: string[] = [];
   chatName: any;
   typingUsers: Set<string> = new Set();
@@ -28,6 +30,7 @@ export class ChatComponent implements OnInit {
   public isEditing = false;
   public editMessageId: string | null = null;
   public currentTargetedUser: any;
+  public isEdited = false;
 
   constructor(
     public authService: AuthService,
@@ -50,7 +53,8 @@ export class ChatComponent implements OnInit {
         _id: msg._id,
         username: msg.username,
         message: msg.message,
-        hover: false
+        hover: false,
+        edited: msg.edited
       });
     });
 
@@ -71,7 +75,8 @@ export class ChatComponent implements OnInit {
         _id: m._id,
         username: m.senderName,
         message: m.content,
-        hover: m.hover || false
+        hover: m.hover || false,
+        edited: m.edited
       }));
     });
 
@@ -94,25 +99,35 @@ export class ChatComponent implements OnInit {
         this.startChat(targetUser);
       }
     });
-
+    this.chatName = null;
   }
 
   prepareEdit(msg: any){
+    this.startingEditMessage = msg.message;
     this.message = msg.message;
     this.editMessageId = msg._id;
     this.isEditing = true;
+    this.isEdited = msg.edited;
   }
 
   submitEdit(){
-    if(this.message.trim() && this.editMessageId && this.currentRoom){
+    if(this.message.trim() && this.editMessageId && this.currentRoom && this.message !== this.startingEditMessage){
       this.socket.emit('edit message', {
         messageId: this.editMessageId,
         roomId: this.currentRoom,
-        newContent: this.message
+        newContent: this.message,
+        edited: true
       });
-      this.cancelEdit();
-      this.startChat(this.currentTargetedUser);
+    } else {
+      this.socket.emit('edit message', {
+        messageId: this.editMessageId,
+        roomId: this.currentRoom,
+        newContent: this.message,
+        edited: this.isEdited
+      });
     }
+    this.cancelEdit();
+    this.startChat(this.currentTargetedUser);
   }
 
   cancelEdit(){

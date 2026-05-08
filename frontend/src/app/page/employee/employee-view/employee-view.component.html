@@ -1,62 +1,67 @@
 <body class="body-padding">
-  <div class="ms-3 me-3">
-    <mat-card class="p-4 card card-body" appearance="outlined">
-        <div class="container">
-    <div class="d-flex justify-content-between mb-3">
-      <h1 class="mt-4">Employee View</h1>
-    </div>
-  </div>
-        <mat-card-header class="card-center">
-          <img src="../../../../assets//pics/bubble.jpg" class="headshot md-fab-employee" alt="">
-        </mat-card-header>
-        <div>
-          <p class="fs-1 text-center">{{name}}</p>
-          <p class="mt-2 fs-3 text-center">{{email}}</p>
-          <p class="mt-2 fs-3 text-center">{{phone}}</p>
+  <div class="container">
+    <mat-card class="p-4 card" appearance="outlined">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="fs-2 fw-bold">Employee View</h1>
+      </div>
 
-          <div class="mt-4">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Title</label>
-                <p class="fs-5">{{ title }}</p>
-              </div>
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Department</label>
-                <p class="fs-5">{{ department }}</p>
-              </div>
-            </div>
+      <mat-card-header class="card-center">
+        <img src="../../../../assets//pics/bubble.jpg" class="headshot md-fab-employee" alt="">
+      </mat-card-header>
+      <div class="mb-2">
+        <p class="fs-1 text-center">{{name}}</p>
+        <p class="mt-2 fs-3 text-center">{{email}}</p>
+        <p class="mt-2 fs-3 text-center">{{phone}}</p>
+      </div>
 
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Date of Birth</label>
-                <p class="fs-5">{{ DOB | date:'mediumDate'}}</p>
-              </div>
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Date of Entry</label>
-                <p class="fs-5">{{ dateOfEntry | date: 'mediumDate'}}</p>
-              </div>
-            </div>
+      <mat-divider></mat-divider>
 
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Salary</label>
-                <p class="fs-5">{{ salary }}</p>
-              </div>
-              <div class="col-md-6">
-                <label class="fw-bold text-muted">Working Hours</label>
-                <p class="fs-5">{{ startTime }}  - {{ endTime }}</p>
-              </div>
-            </div>
-
-            <mat-divider></mat-divider>
-
-            <div class="mb-3 mt-2 ms-4 me-4">
-              <label class="fw-bold text-muted mb-2">Description</label>
-              <div class="border rounded p-3 bg-light" [innerHTML]="about"></div>
-            </div>
-            <button class="ms-2 mt-2 button-content" (click)="goBack()">revert</button>
+      <div class="mt-4">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Title</label>
+            <p class="fs-5">{{ title }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Department</label>
+            <p class="fs-5">{{ department }}</p>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Date of Birth</label>
+            <p class="fs-5">{{ DOB | date:'mediumDate'}}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Date of Entry</label>
+            <p class="fs-5">{{ dateOfEntry | date: 'mediumDate'}}</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Salary</label>
+            <p class="fs-5">{{ salary }}</p>
+          </div>
+          <div class="col-md-6">
+            <label class="fw-bold text-muted">Working Hours</label>
+            <p class="fs-5">{{ startTime }}  - {{ endTime }}</p>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="mb-2 mt-2">
+          <label class="fw-bold text-muted mb-2">Description</label>
+          <div class="border rounded p-3 bg-light" [innerHTML]="about"></div>
+        </div>
+        <mat-card-actions class="p-0">
+          <button mat-button mat-raised-button color="primary" class="mt-2" (click)="goBack()">
+            <i class="fa fa-arrow-left align-middle me-2"></i>  Return
+          </button>
+        </mat-card-actions>
+      </div>
     </mat-card>
   </div>
 </body>

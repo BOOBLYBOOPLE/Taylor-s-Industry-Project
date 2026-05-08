@@ -16,7 +16,8 @@ const messageSchema = new mongoose.Schema({
     content: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
     hover: {type: Boolean},
-    read: {type: Boolean}
+    read: {type: Boolean},
+    edited: {type: Boolean}
 });
 
 module.exports = mongoose.model('message', messageSchema);

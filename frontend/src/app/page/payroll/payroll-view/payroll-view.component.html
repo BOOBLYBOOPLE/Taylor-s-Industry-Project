@@ -1,54 +1,57 @@
 <body class="body-padding">
   <div class="container">
-    <div class="d-flex justify-content-start mb-3">
-      <h1>View Payroll</h1>
-    </div>
-  </div>
+    <mat-card class="p-4 card" appearance="outlined">
+      <div class="d-flex flex-row align-items-center">
+        <h1 class="mt-2 fw-bold fs-2">View Payroll</h1>
+      </div>
 
-    <mat-card class="ms-2 me-2  p-4 card card-body" appearance="outlined">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="fw-bold text-muted">Employee Name:</label>
-          <p class="fs-5">{{employeeName}}</p>
+      <mat-card-header class="p-0 mb-4">
+        <mat-card-title>Employee Name:  {{employeeName}}</mat-card-title>
+        <mat-card-subtitle>Date Administered: {{date}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-divider></mat-divider>
+
+      <div class="col-md-12 mt-4">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="fw-bold text-muted">Department:</label>
+            <p class="fs-5">{{employeeDepartment}}</p>
+          </div>
+          <div class="col-md-4">
+            <label class="fw-bold text-muted">Title:</label>
+            <p class="fs-5">{{employeeTitle}}</p>
+          </div>
+          <div class="col-md-3">
+            <label class="fw-bold text-muted">Hours Worked:</label>
+            <p class="fs-5">{{hoursWorked}}</p>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label class="fw-bold text-muted">Date Administered:</label>
-          <p class="fs-5">{{date}}</p>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="fw-bold text-muted">Amount Earned:</label>
+            <p class="fs-5">{{earned}}</p>
+          </div>
+          <div class="col-md-4">
+            <label class="fw-bold text-muted">Deductions:</label>
+            <p class="fs-5">{{deductions}}</p>
+          </div>
+          <div class="col-md-3">
+            <label class="fw-bold text-muted">Bonuses:</label>
+            <p class="fs-5">{{bonuses}}</p>
+          </div>
         </div>
       </div>
 
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Department:</label>
-          <p class="fs-5">{{employeeDepartment}}</p>
-        </div>
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Title:</label>
-          <p class="fs-5">{{employeeTitle}}</p>
-        </div>
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Hours Worked:</label>
-          <p class="fs-5">{{hoursWorked}}</p>
-        </div>
-      </div>
+      <mat-divider></mat-divider>
 
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Amount Earned:</label>
-          <p class="fs-5">{{earned}}</p>
-        </div>
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Deductions:</label>
-          <p class="fs-5">{{deductions}}</p>
-        </div>
-        <div class="col-md-4">
-          <label class="fw-bold text-muted">Bonuses:</label>
-          <p class="fs-5">{{bonuses}}</p>
-        </div>
-      </div>
+      <mat-card-actions class="p-0 mt-2">
+        <button mat-button mat-raised-button class="" color="primary" (click)="goBack()">
+          <i class="fa fa-arrow-left me-2"></i> Return
+        </button>
+      </mat-card-actions>
+
     </mat-card>
-
-  <div class="ms-2 mt-2 mb-2">
-    <button class="button-content" (click)="goBack()">go back</button>
   </div>
 </body>

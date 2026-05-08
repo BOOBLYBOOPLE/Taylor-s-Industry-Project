@@ -4,6 +4,9 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
 import { webService } from 'src/assets/services/webServices';
 import { ChatService } from 'src/app/page/chat/chatService.component';
 import { AuthService } from 'src/assets/services/auth.service';
+import { ReportBugsComponent } from 'src/app/components/report-bugs/report-bugs.component';
+import { DocumentationComponent } from 'src/app/components/documentation/documentation.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chat-layout',
@@ -20,7 +23,8 @@ export class ChatLayoutComponent implements OnInit{
   constructor(
     public webService: webService,
     public chatService: ChatService,
-    public authService: AuthService
+    public authService: AuthService,
+    public dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -36,6 +40,26 @@ export class ChatLayoutComponent implements OnInit{
     this.activeChatUserId = targetUser._id;
     this.chatService.clearCount(targetUser._id);
     this.chatService.setCurrentChatUser(targetUser);
+  }
+
+  openReport(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'mat-dialog-panel';
+    const dialogRef = this.dialog.open(ReportBugsComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('67');
+    });
+  }
+
+  openInfo(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'mat-dialog-panel';
+    const dialogRef = this.dialog.open(DocumentationComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('69');
+    });
   }
 
 }

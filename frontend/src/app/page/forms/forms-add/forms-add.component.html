@@ -1,32 +1,31 @@
 <body class="body-padding">
   <div class="container">
-    <mat-card class="card card-body" appearance="outlined">
-      <h2 class="mt-4 ms-4 me-4 mb-3">Upload New Document</h2>
-
+    <mat-card class="card card-body p-4" appearance="outlined">
+      <div class="d-flex flex-row align-items-center">
+        <h1 class="mt-2 fw-bold fs-3 mb-3">Upload New Document</h1>
+      </div>
       <form (ngSubmit)="onSubmit()" #docForm="ngForm">
-        <div class="ms-2 me-2">
-
-          <div class="ms-4 me-4 mb-4">
+        <div>
+          <div class="mb-4">
             <label class="fw-bold mb-2">Select Document:</label>
             <input type="file" (change)="onFileSelected($event)" class="form-control" required>
             <small *ngIf="selectedFileName" class="text-success">Selected: {{ selectedFileName }}</small>
           </div>
 
-          <div class="ms-4 me-4 mb-4">
+          <div class="mb-4">
             <label class="fw-bold mb-2">Description (Optional):</label>
             <textarea [(ngModel)]="formData.description" name="description" class="form-control" rows="3"></textarea>
           </div>
 
-          <div class="ms-4 me-4 mb-4">
+          <div class="mb-4">
             <label class="fw-bold mb-2">Submitted By:</label>
             <textarea [(ngModel)]="formData.submit" name="submit" class="form-control" rows="3"></textarea>
           </div>
 
-          <div class="ms-4 me-4 d-flex justify-content-start gap-2 mb-3">
-            <button type="submit" class="btn btn-success" [disabled]="!selectedFile">Upload Document</button>
-            <button type="button" class="btn btn-close-white" (click)="goBack()">Cancel</button>
+          <div class="d-flex justify-content-start gap-2 mb-3">
+            <button type="button" class="btn btn-primary" (click)="goBack()"><i class="fa fa-cancel"></i> Cancel</button>
+            <button type="submit" class="btn btn-success" [disabled]="!selectedFile"><i class="fa fa-upload"></i> Upload Document</button>
           </div>
-
         </div>
       </form>
     </mat-card>
