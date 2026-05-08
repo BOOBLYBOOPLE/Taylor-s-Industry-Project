@@ -1,25 +1,32 @@
 <body class="body-padding">
-  <mat-card class="ms-2 me-2">
-    <div class="row ms-4">
-      <h1 class="bold mt-4" style="size: 32px;">{{ emailData.subject }}</h1>
-    </div>
-    <div class="row ms-4">
-      <span><p>To: {{emailData.recipient}}</p></span>
-    </div>
-    <div class="row ms-4">
-      <span><p>From: {{ emailData.sender }}</p></span>
-    </div>
-    <div *ngIf="emailData.cc" class="row ms-4">
-      <span>CC: {{emailData.cc}}</span>
-    </div>
-    <div class="mb-3 mt-2 ms-4 me-4">
-      <label class="fw-bold text-muted mb-2">Content:</label>
-      <div [innerHTML]="emailData.content" class="border rounded p-3 bg-light"></div>
-    </div>
-    <div class="ms-4 mb-4">
-      <button class="button-content" routerLink="/email/main">back</button>
-      <button class="button-content ms-2" *ngIf="emailData.sent === false" (click)="composeEmail()">reply</button>
-    </div>
+  <div class="container">
+    <mat-card class="p-4 card" appearance="outlined">
+      <div class="d-flex flex-row align-items-center">
+        <h1 class="mt-2 fw-bold fs-2">{{ emailData.subject }}</h1>
+      </div>
+      <mat-card-header class="p-0 mb-4">
+        <mat-card-title><span><p>To:  {{emailData.recipient}}</p></span></mat-card-title>
+        <mat-card-subtitle><span><p>From: {{ emailData.sender }}</p></span></mat-card-subtitle>
+      </mat-card-header>
 
-  </mat-card>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="emailData.cc" class="row mt-4">
+        <span>CC: {{emailData.cc}}</span>
+      </div>
+      <div class="mb-2 mt-4">
+        <label class="fw-bold text-muted mb-2">Content:</label>
+        <div [innerHTML]="emailData.content" class="border rounded p-3 bg-light"></div>
+      </div>
+
+      <mat-card-actions class="p-0 mb-4 gap-4">
+        <button mat-raised-button color="primary" routerLink="/email/main">
+          <i class="fa fa-arrow-left me-2"></i>  Return
+        </button>
+        <button mat-raised-button color="accent" *ngIf="emailData.sent === false && emailData.draft === false" (click)="composeEmail()">
+        <i class="fa fa-paper-plane"></i>  reply
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </body>

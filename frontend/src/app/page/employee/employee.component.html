@@ -1,15 +1,14 @@
 <body class="body-padding">
-  <div class="d-flex align-items-center mb-3 ms-2">
-    <mat-form-field appearance="outline" class="mt-2 ms-2" style="width: 300px;">
+  <div class="d-flex flex-row align-items-center mt-2 mb-4 ms-2">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="d-flex" style="width: auto;">
       <mat-label>Search Employees</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. John Doe">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <button class="ms-2 button-3" routerLink="add-employee" ><i class="fa fa-add"></i></button>
-    <!-- <button class="ms-2">
-      <mat-icon>filter_list</mat-icon> Filter
-    </button> -->
+    <button class="ms-2 button-content" routerLink="add-employee" >
+      <i class="fa fa-add"></i>Add
+    </button>
   </div>
 
   <div class="ms-2 me-2">

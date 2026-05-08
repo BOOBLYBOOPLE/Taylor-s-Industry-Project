@@ -70,7 +70,8 @@ io.on('connection', (socket) => {
         senderName: socket.data.username,
         content: content,
         timestamp: new Date(),
-        read: false
+        read: false,
+        edited: false
       });
 
       io.to(roomId).emit('chat message', {
@@ -95,12 +96,13 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('edit message', async({ messageId, roomId, newContent }) => {
+  socket.on('edit message', async({ messageId, roomId, newContent, edited }) => {
     try{
       const updatedMessage = await Message.findByIdAndUpdate(
         messageId,
-        { content: newContent },
-        { new: true }
+        { content: newContent,
+          edited: edited
+         }
       );
 
       io.to(roomId).emit('message changed', 
@@ -196,3 +198,7 @@ mongoose.connection.once('open', () => {
 mongoose.connect(process.env.MONGO_URL).then(() => {
     server.listen(PORT, () => console.log(`Both Server running on port ${PORT}`));
   }).catch(err => console.error(err));
+
+app.get('/', (req, res) => {
+  res.send('API running');
+});

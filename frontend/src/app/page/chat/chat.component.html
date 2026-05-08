@@ -7,10 +7,11 @@
           <div *ngFor="let msg of messages" class="mb-2">
             <div *ngIf="msg.username === chatName" class="received_msg">
               <div (mouseenter)="goIn(msg)" (mouseleave)="goOut(msg)" class="received_withd_msg">
-                <div class="d-flex flex-row align-items-center">
+                <div class="d-flex flex-row align-items-center align-middle">
                   <strong style="font-size: 0.8em;">{{ msg.username }}</strong>
+                  <span class="ms-2" *ngIf="msg.edited">(edited)</span>
                   <div *ngIf="msg.hover">
-                    <button mat-icon-button (click)="prepareEdit(msg)"><mat-icon>edit</mat-icon></button>
+                    <!-- <button mat-icon-button (click)="prepareEdit(msg)"><mat-icon>edit</mat-icon></button> -->
                     <button mat-icon-button (click)="deleteMessage(msg)"><mat-icon>delete</mat-icon></button>
                   </div>
                 </div>
@@ -21,6 +22,7 @@
               <div class="sent_withd_msg">
                 <div (mouseenter)="goIn(msg)" (mouseleave)="goOut(msg)">
                   <div class="d-flex flex-row align-items-center justify-content-end">
+                    <span class="me-2" *ngIf="msg.edited">(edited)</span>
                     <div *ngIf="msg.hover">
                       <button mat-icon-button (click)="deleteMessage(msg)"><mat-icon>delete</mat-icon></button>
                       <button mat-icon-button (click)="prepareEdit(msg)"><mat-icon>edit</mat-icon></button>
@@ -41,7 +43,7 @@
       </div>
     </mat-card>
     <div class="d-flex flex-row mt-2 ms-2">
-      <button *ngIf="!isEditing" class="btn btn-secondary" style="height: 40px; margin-top: 8px;"><i class="fa fa-plus"></i></button>
+      <!-- <button *ngIf="!isEditing" class="btn btn-secondary" style="height: 40px; margin-top: 8px;"><i class="fa fa-plus"></i></button> -->
       <button *ngIf="isEditing" class="btn btn-danger" style="height: 40px; margin-top: 8px;" (click)="cancelEdit()">
         <i class="fa fa-times"></i>
       </button>

@@ -78,7 +78,7 @@ export class EmailAddComponent implements OnInit {
             cc: this.draftData.cc,
             content: this.draftData.content,
           });
-        } else{
+        } else {
           this.emailForm.patchValue({
             recipient: this.draftData.sender,
             subject: ("RE: " + this.draftData.subject)
@@ -103,10 +103,21 @@ export class EmailAddComponent implements OnInit {
     this.webService.webServiceCreate(`${this.apiURL}/emails/send`, data).subscribe({
       next: () => {
         alert('Sent');
-        this.router.navigate(['/email/main']);
       },
       error: (err) => console.error(err)
     });
+
+    if(this.draftData.draft){
+      this.webService.webServiceDelete(`${this.apiURL}/emails/${this.draftData._id}`, {}).subscribe({
+        next: responseData => {
+          console.log(responseData);
+        }, error: err => {
+          console.log(err);
+        }
+      });
+    }
+
+    this.router.navigate(['/email/main']);
   }
 
   saveDraft(){

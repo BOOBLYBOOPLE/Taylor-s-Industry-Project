@@ -1,23 +1,13 @@
 <body class="body-padding">
-    <div class="d-inline-flex ms-2 mt-2">
-      <div class="spacer-margin-left">
-        <mat-form-field appearance="outline">
+    <div class="d-flex flex-row align-items-center ms-2 mb-4 mt-2">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Search</mat-label>
           <input (keyup)="applyFilter($event)" matInput>
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button class="ms-2 button-3" routerLink="add-complaints" ><i class="fa fa-add"></i></button>
-        <!-- <button class="ms-2 button-3"><i class="fa fa-filter"></i></button> -->
-      </div>
-      <!-- <div class="spacer-margin-right">
-        <mat-form-field appearance="outline">
-          <mat-label>Chose a date</mat-label>
-          <input matInput [matDatepicker]="picker">
-          <mat-hint>MM-DD-YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div> -->
+        <button class="ms-2 button-content" routerLink="add-complaints">
+          <i class="fa fa-add"></i>Add
+        </button>
     </div>
 
     <div class="ms-2 me-2">
@@ -62,7 +52,7 @@
                 <th mat-header-cell *matHeaderCellDef> Actions </th>
                 <td mat-cell *matCellDef="let element">
                   <button class="button-content" [matMenuTriggerFor]="menu">
-                    <span>actions</span><mat-icon>arrow_drop_down</mat-icon></button>
+                    <span>Actions</span><mat-icon>arrow_drop_down</mat-icon></button>
                     <mat-menu #menu="matMenu">
                       <button class="md-button" [routerLink]="['/complaints/view-complaints', element._id]" mat-menu-item>
                         <mat-icon>visibility</mat-icon><span>view</span></button>

@@ -57,13 +57,15 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element; let i = index">
-        <button class="button-content" [matMenuTriggerFor]="menu">actions</button>
+        <button class="button-content" [matMenuTriggerFor]="menu">
+          Actions<mat-icon>arrow_drop_down</mat-icon>
+        </button>
           <mat-menu #menu="matMenu">
             <button class="md-button" (click)="viewEmail(element._id)" mat-menu-item>
               <mat-icon color="accent">visibility</mat-icon>
               <span>View</span>
             </button>
-            <button class="md-button" (click)="composeEmail(element._id)" *ngIf="element.received === true" mat-menu-item>
+            <button class="md-button" (click)="composeEmail(element._id)" *ngIf="element.received === true && element.draft === false" mat-menu-item>
               <mat-icon>reply</mat-icon>
               <span>Reply</span>
             </button>

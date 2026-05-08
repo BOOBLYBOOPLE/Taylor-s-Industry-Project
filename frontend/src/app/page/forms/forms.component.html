@@ -1,11 +1,13 @@
 <body class="body-padding">
-  <div>
-    <mat-form-field class="mt-2 ms-2" appearance="outline">
+  <div class="d-flex flex-row align-items-center ms-2 mt-2 mb-4">
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label >Search</mat-label>
       <input (keyup)="applyFilter($event)" matInput>
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <button class="ms-2 button-3" routerLink="add"><i class="fa fa-add"></i></button>
+    <button class="ms-2 button-content" routerLink="add">
+      <i class="fa fa-add"></i>Add
+    </button>
   </div>
 
   <div class="ms-2 me-2">
@@ -48,7 +50,7 @@
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let element">
               <button class="button-content" [matMenuTriggerFor]="menu">
-                <span>actions</span><mat-icon>arrow_drop_down</mat-icon>
+                <span>Actions</span><mat-icon>arrow_drop_down</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
                 <button class="md-button" mat-menu-item [routerLink]="['/forms/view', element._id]">

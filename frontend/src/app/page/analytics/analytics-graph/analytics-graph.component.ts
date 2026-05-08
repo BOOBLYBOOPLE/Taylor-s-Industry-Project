@@ -86,7 +86,7 @@ export class AnalyticsGraphComponent implements OnInit {
   }
 
   goBack(){
-    this.router.navigate(['finance']);
+    this.router.navigate(['analytics']);
   }
 
   updatePreview() {

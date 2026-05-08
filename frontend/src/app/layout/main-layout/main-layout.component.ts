@@ -72,9 +72,10 @@ export class MainLayoutComponent implements OnInit{
     const dialogRef = this.dialog.open(ReportBugsComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('67', result);
+      console.log('67');
     });
   }
+
   toggleSideNav(){
     this.sidenav.toggle();
   }
@@ -85,7 +86,7 @@ export class MainLayoutComponent implements OnInit{
     const dialogRef = this.dialog.open(DocumentationComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('67', result);
+      console.log('69');
     });
   }
 }

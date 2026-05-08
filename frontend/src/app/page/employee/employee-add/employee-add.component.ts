@@ -143,6 +143,7 @@ export class EmployeeAddComponent implements OnInit {
         password: form.password,
         about: form.about
       };
+      console.log(form.endTime);
 
       const newUser: any = {
         name: form.name,
@@ -163,7 +164,7 @@ export class EmployeeAddComponent implements OnInit {
           this.employeeAddForm.reset();
           this.router.navigate(['employee']);
         },
-        error : err => { console.log("failed"); }
+        error : err => { console.log(err); }
       });
     }
   }

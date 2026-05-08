@@ -26,7 +26,6 @@
 
 .container {
   padding: 20px;
-  background-color: #f8f9fa;
 }
 
 .header-actions {
@@ -295,8 +294,7 @@ svg.material-icons:not(:last-child) {
 }
 
 .card-container {
-  display: flex;
-  width: 100%;
+  width: auto;
   flex-wrap: wrap;
 }
 
@@ -312,15 +310,17 @@ svg.material-icons:not(:last-child) {
   border-radius: 4px;
   border: 1px black;
   background-color: rgb(249,246,238) !important;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  overflow-x: hidden;
   margin-top: 0px;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 0px;
-  display:flex;
+  padding-right: 0px;
+  display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding-right: 0px;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
@@ -688,19 +688,21 @@ footer a {
   box-sizing: border-box;
   color: black;
   cursor: pointer;
-  display: inline-block;
   font-family: "Amazon Ember",sans-serif;
   font-size: 14px;
-  line-height: 30px;
-  padding: 0 5px 0 5px;
-  position: relative;
+  height: 30px;
+  padding: 0 12px 0 12px;
   text-align: center;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  vertical-align: middle;
-  width: 100px;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  width: auto;
+  gap: 8px;
+  position: relative;
 }
 
 .button-content:hover {
@@ -796,13 +798,14 @@ html, body {
 
 body {
   margin: 0;
+  width: 100%;
+  height: 100%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: peachpuff;
 }
 
 .body-padding{
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding: 6px;
 }
 
 body::-webkit-scrollbar{
