@@ -6,7 +6,11 @@ const formsSchema = new mongoose.Schema({
     filename: {type: String},
     description: { type: String },
     size: {type: Number},
-    submit: {type: String},
+    employeeId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Employee',
+        required: true 
+    },
     path: {type: String}
 });
 

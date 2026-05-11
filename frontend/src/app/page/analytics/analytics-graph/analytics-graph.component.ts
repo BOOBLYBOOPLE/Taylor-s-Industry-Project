@@ -18,7 +18,7 @@ export class AnalyticsGraphComponent implements OnInit {
   public xAxisType: any;
   public graphTypes: any = ['splineArea', 'column', 'bar',
         'area', 'line', 'pie', 'doughnut', 'scatter'];
-  public prefixTypes: any = ['$', '%'];
+  public prefixTypes: any = ['$', '%', 'none'];
   public graphDataPoints: any[] = [];
   public apiUrl = globalEnv.apiUrl;
   public fieldName: any;
@@ -65,7 +65,7 @@ export class AnalyticsGraphComponent implements OnInit {
       let labelValue: string | null = null;
 
       if (this.xAxisType === 'date') {
-        xValue = new Date(this.currentX).toISOString;
+        labelValue = new Date(this.currentX).toISOString().split('T')[0];
       } else if (this.xAxisType === 'number') {
         xValue = Number(this.currentX);
       } else {
@@ -96,7 +96,7 @@ export class AnalyticsGraphComponent implements OnInit {
         text: this.graphForm.value.title || "Graph Preview"
       },
       axisY: {
-        prefix: this.graphForm.value.axisYPrefix
+        prefix: this.graphForm.value.axisYPrefix === 'none' ? '' : this.graphForm.value.axisYPrefix
       },
       data: [{
         name: this.graphForm.value.name || 'Data Series',
@@ -118,7 +118,7 @@ export class AnalyticsGraphComponent implements OnInit {
       animationEnabled: true,
       exportEnabled: true,
       titleText: formValues.title,
-      axisYPrefix: formValues.axisYPrefix,
+      axisYPrefix: formValues.axisYPrefix === 'none' ? '' : formValues.axisYPrefix,
       fontSize: formValues.fontSize,
       data: [{
         type: formValues.graphType,
@@ -128,7 +128,7 @@ export class AnalyticsGraphComponent implements OnInit {
       }]
     };
 
-    this.web.webServiceCreate(`${this.apiUrl}/finance-analytics/graphs`, graphConfig).subscribe(() => alert('Graph Saved'));
+    this.web.webServiceCreate(`${this.apiUrl}/finance-analytics/graphs`, graphConfig).subscribe(() => alert('Graph Saved, Refreshing Page...'));
     this.goBack();
   }
 

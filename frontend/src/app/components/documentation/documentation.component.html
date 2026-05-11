@@ -1,10 +1,46 @@
-<h2 mat-dialog-title>About app</h2>
+<h3 mat-dialog-title class="fs-2 pb-0 mb-0 fw-bolds">Application Info</h3>
+<h5 class="ps-4 mt-0 mb-2 text-muted">Verison 0.1</h5>
+<mat-divider></mat-divider>
 
-<div mat-dialog-content class="d-flex flex-column gap-3" style="min-width: 400px;">
-  <mat-label>Verison 0.1</mat-label>
-  <p>Navigate with the sidebar</p>
-</div>
+<mat-dialog-content class="mat-typography px-4 py-2">
+  <p class="mb-1">Click on the hamburger menu button to collapse or expand sidebar</p>
+  <p class="mb-1">Navigate the application with the sidebar to access different windows</p>
+  <p class="mb-1">Report any bugs or issues by clicking on the warning button</p>
+  <p class="mb-4">Exit the Email and Chat Pages through the back button in the sidebar</p>
 
-<div mat-dialog-actions align="start">
-  <button mat-button (click)="onCancel()">Cancel</button>
-</div>
+  <li>Home</li>
+  <p>- Quick navigation to important pages</p>
+  <li>Employee</li>
+  <p>- Manage and add new employees to the database</p>
+  <li>Payroll</li>
+  <p>- Distribute salary to employees and make adjustments</p>
+  <li>Attendance</li>
+  <p>- View and mark attendance of employees</p>
+  <li>Leaves</li>
+  <p>- Make and manage employee leave requests</p>
+  <li>Calendar</li>
+  <p>- Plan and schedule your day</p>
+  <li>Complaints</li>
+  <p>- Create, view and manage employee complaints</p>
+  <li>Analytics</li>
+  <p>- View and create graphs</p>
+  <li>Reports</li>
+  <p>- Upload and download documents to be stored and accessed</p>
+  <li>Email</li>
+  <p>- Send and manage emails</p>
+  <li>Chat</li>
+  <p>- Communicate with other employees through this application channel</p>
+  <li>Recruitment</li>
+  <p>- View and manage potential new hires</p>
+  <li>Settings</li>
+  <p>- Configure accessibility settings and reset password</p>
+
+  <p class="mt-2 mb-1">Create more entries by clicking the add button</p>
+  <p class="mb-1">Log out by clicking the exit button</p>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+<mat-dialog-actions aling="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+

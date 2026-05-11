@@ -25,7 +25,6 @@ export class PayrollComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPayload();
-
   }
 
   loadPayload() {
@@ -34,7 +33,6 @@ export class PayrollComponent implements OnInit {
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log(this.dataSource.data);
         },
         error: (err) => console.error('Error loading payroll:', err)
     });

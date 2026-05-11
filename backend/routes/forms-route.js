@@ -32,7 +32,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       filename: req.file.filename,
       description: req.body.description,
       size: req.file.size,
-      submit: req.body.submit,
+      employeeId: req.body.employeeId,
       path: req.file.path
     });
 
@@ -47,7 +47,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const docs = await Forms.find().sort({ date: -1 });
+    const docs = await Forms.find().sort({ date: -1 }).populate('employeeId');
     res.json(docs);
   } catch (err) {
     console.error(err);
@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const doc = await Forms.findById(req.params.id);
+    const doc = await Forms.findById(req.params.id).populate('employeeId'); ;
     
     if (!doc) {
       return res.status(404).json({ msg: 'Document not found' });

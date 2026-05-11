@@ -34,8 +34,16 @@
 
         <div class="row ms-4">
           <button class="w-auto btn btn-primary" routerLink="/email/main"><i class="fa fa-cancel"></i>  Cancel</button>
-          <button class="ms-2 btn w-auto btn-info" (click)="saveDraft()" routerLink="/email/main"><i class="fa fa-save"></i>  Save as Draft</button>
-          <button class="ms-2 btn w-auto btn-secondary" (click)="sendEmail()" routerLink="/email/main"><i class="fa fa-paper-plane"></i>  Send</button>
+
+          <button class="ms-2 btn w-auto btn-info" *ngIf="emailForm.invalid"
+                  (click)="saveDraft()" routerLink="/email/main" disabled><i class="fa fa-save"></i>  Save as Draft</button>
+          <button class="ms-2 btn w-auto btn-info" *ngIf="emailForm.valid"
+                  (click)="saveDraft()" routerLink="/email/main"><i class="fa fa-save"></i>  Save as Draft</button>
+
+          <button class="ms-2 btn w-auto btn-secondary" *ngIf="!emailForm.get('content')?.value || emailForm.invalid"
+                  (click)="sendEmail()" routerLink="/email/main" disabled><i class="fa fa-paper-plane"></i>  Send</button>
+          <button class="ms-2 btn w-auto btn-secondary" *ngIf="emailForm.get('content')?.value && emailForm.valid"
+                  (click)="sendEmail()" routerLink="/email/main"><i class="fa fa-paper-plane"></i>  Send</button>
         </div>
 
       </mat-card>
