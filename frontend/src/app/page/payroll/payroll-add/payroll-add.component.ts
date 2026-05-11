@@ -26,17 +26,17 @@ export class PayrollAddComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        this.payrollForm = this.fb.group({
-          employeeId: [null, Validators.required],
-          date: [new Date(), Validators.required],
-          amount: [0, Validators.required],
-          hoursWorked: [0],
-          deductions: [0],
-          bonuses: [0]
-        });
-        this.web.webServiceRetrieve(`${this.apiUrl}/employees`).subscribe((data: any) => {
-          this.employees = data;
-        });
+      this.payrollForm = this.fb.group({
+        employeeId: [null, Validators.required],
+        date: [new Date(), Validators.required],
+        amount: [0, Validators.required],
+        hoursWorked: [0],
+        deductions: [0],
+        bonuses: [0]
+      });
+      this.web.webServiceRetrieve(`${this.apiUrl}/employees`).subscribe((data: any) => {
+        this.employees = data;
+      });
     }
 
     calculateTimeDiff(time1: string, time2: string): number{

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { webService } from 'src/assets/services/webServices';
 import { globalEnv } from 'src/assets/shared/global-env.component';
@@ -8,18 +8,27 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
   templateUrl: './forms-add.component.html',
   styleUrls: ['./forms-add.component.css']
 })
-export class FormsAddComponent {
-  private apiUrl = globalEnv.apiUrl + '/forms/upload';
+export class FormsAddComponent implements OnInit {
+  private apiUrl = globalEnv.apiUrl;
 
   formData = {
     date: Date.now(),
     description: '',
-    submit: ''
+    employeeId: null
   };
   selectedFile: File | null = null;
   selectedFileName: string | null = null;
+  selectedEmployee: any;
+  employees: any = [];
 
   constructor(private web: webService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.web.webServiceRetrieve(`${this.apiUrl}/employees`).subscribe((data: any) => {
+      this.employees = data;
+      console.log(this.employees);
+    });
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -33,6 +42,11 @@ export class FormsAddComponent {
     this.router.navigate(['forms']);
   }
 
+  onEmployeeSelect(event: any) {
+    const empId = event.value;
+    this.selectedEmployee = this.employees.find((e: { _id: any; id: any; }) => e._id === empId || e.id === empId);
+  }
+
   onSubmit() {
   if (!this.selectedFile) {
     alert('Please select a file.');
@@ -43,10 +57,10 @@ export class FormsAddComponent {
 
   uploadData.append('file', this.selectedFile);
   uploadData.append('description', this.formData.description || ''); // Handle empty string
-  uploadData.append('submit', this.formData.submit || '');
+  uploadData.append('employeeId', this.formData.employeeId || '');
   uploadData.append('date', this.formData.date.toString());
 
-  this.web.webServiceCreate(this.apiUrl, uploadData).subscribe({
+  this.web.webServiceCreate(`${this.apiUrl + '/forms/upload'}`, uploadData).subscribe({
     next: (res) => {
       alert('Document Uploaded Successfully!');
       this.router.navigate(['/forms']);

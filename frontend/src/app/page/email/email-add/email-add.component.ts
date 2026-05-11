@@ -49,20 +49,18 @@ export class EmailAddComponent implements OnInit {
   public draftData: any;
 
   ngOnInit(): void {
+    this.emailID = this.route.snapshot.paramMap.get('id');
+    if(this.emailID) { this.reply(this.emailID); }
+
     this.emailForm = this.fb.group({
       recipient: new FormControl(null, [Validators.required, Validators.email]),
       sender: new FormControl(this.user.email, Validators.required),
       userId: new FormControl(this.user.id, Validators.required),
       subject: new FormControl(null, Validators.required),
       cc: new FormControl(null),
-      content: new FormControl(null, Validators.required),
+      content: new FormControl(null),
       sendDate: new FormControl(new Date())
     });
-
-    this.emailID = this.route.snapshot.paramMap.get('id');
-
-    if(this.emailID)
-      this.reply(this.emailID);
   }
 
   reply(id: any){
@@ -89,7 +87,6 @@ export class EmailAddComponent implements OnInit {
   }
 
   sendEmail(){
-
     const data = {
       userId: this.user.id,
       recipient: this.emailForm.value.recipient,
@@ -102,7 +99,7 @@ export class EmailAddComponent implements OnInit {
 
     this.webService.webServiceCreate(`${this.apiURL}/emails/send`, data).subscribe({
       next: () => {
-        alert('Sent');
+        alert('Email Sent, Please Refresh');
       },
       error: (err) => console.error(err)
     });
@@ -116,7 +113,6 @@ export class EmailAddComponent implements OnInit {
         }
       });
     }
-
     this.router.navigate(['/email/main']);
   }
 
@@ -134,13 +130,13 @@ export class EmailAddComponent implements OnInit {
     if(this.draftData.draft){
       this.webService.webServiceUpdate(`${this.apiURL}/emails/${this.emailID}`, data).subscribe({
         next: responseData => {
-          console.log(responseData);
+          alert('Draft Updated');
         }
       });
     } else{
       this.webService.webServiceCreate(`${this.apiURL}/emails/draft`, data).subscribe({
         next: () => {
-          alert('drafted');
+          alert('Draft Created');
           this.router.navigate(['/email/main']);
         },
         error: (err) => console.error(err)

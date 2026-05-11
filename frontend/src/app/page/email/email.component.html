@@ -2,9 +2,8 @@
   <div class="ms-2 mt-2">
     <h1>{{ (this.filterData | titlecase) ?? "All Emails"}}</h1>
     <mat-form-field class=""  appearance="outline">
-      <mat-label>
-        Search
-      </mat-label>
+      <mat-label>Search</mat-label>
+      <mat-icon matSuffix>search</mat-icon>
       <input matInput>
     </mat-form-field>
     <button (click)="composeEmail(null)"  class="button-content" style="margin-bottom: 12px; margin-left: 12px; margin-right: 12px;">

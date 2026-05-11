@@ -54,12 +54,12 @@ export class MainLayoutComponent implements OnInit{
   }
 
   ngOnInit(): void {
-        this.currentUrl = this.router.url;
-      const title = localStorage.getItem('activeTitle');
-      if(this.currentUrl === this.homeUrl)
-        this.titleDisplay = this.displayedColumns.home;
-      else
-        this.titleDisplay = title;
+    this.currentUrl = this.router.url;
+    const title = localStorage.getItem('activeTitle');
+    if(this.currentUrl === this.homeUrl)
+      this.titleDisplay = this.displayedColumns.home;
+    else
+      this.titleDisplay = title;
   }
 
   clearToken(){
