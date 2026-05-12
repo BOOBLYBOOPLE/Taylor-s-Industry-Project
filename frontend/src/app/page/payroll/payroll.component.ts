@@ -27,16 +27,21 @@ export class PayrollComponent implements OnInit {
     this.loadPayload();
   }
 
-  loadPayload() {
-    this.web.webServiceRetrieve<payrollDataModel[]>(`${this.apiUrl}/finance`).subscribe({
-        next: (data) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        },
-        error: (err) => console.error('Error loading payroll:', err)
-    });
-  }
+loadPayload() {
+  this.web.webServiceRetrieve<payrollDataModel[]>(`${this.apiUrl}/finance`).subscribe({
+    next: (data) => {
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+
+      this.dataSource.data.forEach((entry: any) => {
+        if(entry.employeeId === null){
+          this.onDelete(entry, true);
+        }
+      });
+    }, error: (err) => console.error('Error loading payroll:', err)
+  });
+ }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -47,16 +52,26 @@ export class PayrollComponent implements OnInit {
     }
   }
 
-  onDelete(element: any) {
+  onDelete(element: any, auto: boolean) {
     const id = element._id;
-    if (confirm(`Are you sure you want to delete ${element.employeeId?.name || 'this record'}?`)) {
+    if(auto){
       this.web.webServiceDelete(`${this.apiUrl}/finance/${id}`, {}).subscribe({
         next: () => {
-          console.log("Data deleted");
+          console.log('deleted employee entry removed');
           this.loadPayload();
         },
         error: (error) => console.error(error)
       });
+    } else {
+      if (confirm(`Are you sure you want to delete this entry?`)) {
+        this.web.webServiceDelete(`${this.apiUrl}/finance/${id}`, {}).subscribe({
+          next: () => {
+            console.log("Data deleted");
+            this.loadPayload();
+          },
+          error: (error) => console.error(error)
+        });
+      }
     }
   }
 }

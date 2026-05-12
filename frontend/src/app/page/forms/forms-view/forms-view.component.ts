@@ -25,12 +25,11 @@ export class FormsViewComponent {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      // Fetch specific document details (Backend must support this GET route)
       this.web.webServiceRetrieve<any>(`${this.apiUrl}/${id}`).subscribe({
         next: (res) => {
-          // If your API returns an array for single items, use res[0]
-          // Otherwise, just use res
           this.data = Array.isArray(res) ? res[0] : res;
+          console.log(this.data);
+          console.log(decodeURIComponent(this.data.name));
         },
         error: (err) => console.error(err)
       });

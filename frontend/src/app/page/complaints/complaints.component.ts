@@ -28,14 +28,21 @@ export class ComplaintsComponent implements OnInit{
   }
 
   loadComplaints(){
-      this.web.webServiceRetrieve(`${this.apiUrl}/complaints`).subscribe({
-        next: (data: any) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          console.log('Complaints loaded:', data);
-        },
-        error: (err) => console.error('Error loading recruitment:', err)
+    this.web.webServiceRetrieve(`${this.apiUrl}/complaints`).subscribe({
+      next: (data: any) => {
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+      this.dataSource.data.forEach((entry: any) => {
+        if(entry.employeeId === null){
+          this.onDelete(entry, true);
+        }
+      });
+
+      console.log('Complaints loaded:', data);
+      },
+      error: (err) => console.error('Error loading recruitment:', err)
     });
   }
 
@@ -59,18 +66,30 @@ export class ComplaintsComponent implements OnInit{
       },
       error: (error: any) => console.error('Error resolving complaint:', error)
     });
+    this.loadComplaints();
   }
 
-    onDelete(element: any) {
+    onDelete(element: any, auto: boolean) {
     const id = element._id;
-    if (confirm(`Are you sure you want to delete ${element.name}?`)) {
+    if(auto){
       this.web.webServiceDelete(`${this.apiUrl}/complaints/${id}`, {}).subscribe({
         next: () => {
-          console.log("Data deleted");
+          console.log('deleted null employee entry');
           this.loadComplaints();
         },
         error: (error) => console.error(error)
       });
+    } else {
+      if (confirm(`Are you sure you want to delete this entry?`)) {
+        this.web.webServiceDelete(`${this.apiUrl}/complaints/${id}`, {}).subscribe({
+          next: () => {
+            console.log("Data deleted");
+            this.loadComplaints();
+          },
+          error: (error) => console.error(error)
+        });
+      }
     }
+
   }
 }

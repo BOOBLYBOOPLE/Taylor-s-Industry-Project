@@ -8,6 +8,7 @@ import { globalEnv } from 'src/assets/shared/global-env.component';
 import { webService } from 'src/assets/services/webServices';
 import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/assets/services/auth.service';
+import { ChatService } from '../chat/chatService.component';
 
 @Component({
   selector: 'app-employee',
@@ -28,20 +29,24 @@ export class EmployeeComponent implements OnInit {
   dataSource = new MatTableDataSource<employeeDataModel>([]);
 
   private apiUrl = globalEnv.apiUrl;
+  public userList: any = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  socket: any;
 
   constructor(
     private router: Router,
     private webService: webService,
-    private auth: AuthService
+    private auth: AuthService,
+    private chatService: ChatService
   ) {
     this.isAdmin = this.auth.getRole() === 'admin';
   }
 
   ngOnInit(): void {
     this.loadEmployees();
+    this.socket = this.chatService.socket;
   }
 
   loadEmployees() {
@@ -69,14 +74,34 @@ export class EmployeeComponent implements OnInit {
 
   onDelete(element: any) {
     const id = element._id;
-    if (confirm(`Are you sure you want to delete ${element.name}?`)) {
+    if (confirm(`Are you sure you want to delete ${element.name}? ` + '\r' + 'Doing so will remove all records related to this employee.')) {
+      this.webService.webServiceRetrieve(`${this.apiUrl}/users/all`).subscribe({
+        next: (responseData) => {
+          this.userList = responseData;
+          console.log(this.userList)
+          this.userList.forEach((user: any) => {
+            if(user.username === element.name){
+              this.webService.webServiceDelete(`${this.apiUrl}/users/${user._id}`, {}).subscribe({
+                next: () => {
+                  console.log('user deleted');
+                }, error: (error) => {
+                  console.log(error);
+                }
+              });
+            }
+          });
+        }
+      });
+
       this.webService.webServiceDelete(`${this.apiUrl}/employees/${id}`, {}).subscribe({
         next: () => {
           console.log("Data deleted");
+          this.socket.emit('refresh-user-list');
           this.loadEmployees();
         },
         error: (error) => console.error(error)
       });
+
     }
   }
 }

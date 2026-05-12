@@ -28,7 +28,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     const newDoc = new Forms({
       date: req.body.date,
-      name: req.file.originalname,
+      name: Buffer.from(req.file.originalname, 'latin1').toString('utf-8'),
       filename: req.file.filename,
       description: req.body.description,
       size: req.file.size,

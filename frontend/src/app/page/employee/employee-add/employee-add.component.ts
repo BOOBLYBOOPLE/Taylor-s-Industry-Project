@@ -18,6 +18,7 @@ export class EmployeeAddComponent implements OnInit {
   public employeeID: any;
   public apiUrl = globalEnv.apiUrl;
   public employeeAddForm!: FormGroup;
+  public maxDate = new Date();
 
   public quillStyle = {
     'width': '100%',

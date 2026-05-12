@@ -8,7 +8,7 @@
           <div class="col-md-6">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of Birth</mat-label>
-              <input matInput [matDatepicker]="dobpicker" formControlName="DOB">
+              <input matInput [max]="maxDate" [matDatepicker]="dobpicker" formControlName="DOB">
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="dobpicker"></mat-datepicker-toggle>
               <mat-datepicker #dobpicker></mat-datepicker>

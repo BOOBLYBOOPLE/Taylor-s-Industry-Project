@@ -37,13 +37,13 @@ export class RecruitmentComponent implements OnInit {
 
   getAllRecruitments() {
     this.web.webServiceRetrieve<any[]>(this.apiUrl).subscribe({
-        next: (data) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          console.log('Recruitment loaded:', data);
-        },
-        error: (err) => console.error('Error loading recruitment:', err)
+      next: (data) => {
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log('Recruitment loaded:', data);
+      },
+      error: (err) => console.error('Error loading recruitment:', err)
     });
   }
 
