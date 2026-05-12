@@ -46,7 +46,7 @@ export class SettingpageComponent {
       return;
     }
 
-    if (!this.passwordData.currentPassword || !this.passwordData.newPassword) {
+    if (!this.passwordData.currentPassword && !this.passwordData.newPassword) {
       this.showSnack('Please fill in all fields');
       return;
     }

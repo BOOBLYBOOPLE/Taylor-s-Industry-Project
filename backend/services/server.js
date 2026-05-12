@@ -25,7 +25,22 @@ const io = new Server(server, {
   }
 });
 
-io.on('connection', (socket) => {
+const broadcastUserList = async () => {
+  try {
+    const allUsers = await User.find({}, 'username _id');
+    io.emit('user list', allUsers);
+  } catch (err) {
+    console.error("Error broadcasting user list:", err);
+  }
+};
+
+io.on('connection', async (socket) => {
+  try {
+    const activeEmployees = await Employee.find({}, 'name username'); 
+    socket.emit('user list', activeEmployees.map(emp => emp.username || emp.name));
+  } catch (err) {
+    console.error("Error updating sidebar:", err);
+  }
   socket.on('join', async ({roomId, username, userId, targetUserId}) => {
 
     socket.data.username = username;
@@ -94,6 +109,10 @@ io.on('connection', (socket) => {
     if(socket.data.username){
       io.emit('user left', socket.data.username)
     }
+  });
+
+  socket.on('refresh-user-list', () => {
+    broadcastUserList();
   });
 
   socket.on('edit message', async({ messageId, roomId, newContent, edited }) => {

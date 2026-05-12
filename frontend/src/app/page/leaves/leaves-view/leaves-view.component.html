@@ -51,9 +51,15 @@
         <div class="border rounded p-3 bg-light" [innerHTML]="leaveData.content"></div>
       </div>
 
-      <mat-card-actions class="p-0">
+      <mat-card-actions class="gap-4 p-0">
         <button mat-button mat-raised-button color="primary" class="mt-2" (click)="goBack()">
           <i class="fa fa-arrow-left me-2"></i> Return
+        </button>
+        <button *ngIf="leaveData.status === 'Unapproved'" mat-button mat-raised-button color="warn" class="mt-2" (click)="updateStatus('Rejected')">
+          <i class="fa fa-x me-2"></i>  Reject
+        </button>
+        <button *ngIf="leaveData.status === 'Unapproved'" mat-button mat-raised-button color="accent" class="mt-2" (click)="updateStatus('Approved')">
+          <i class="fa fa-check me-2"></i> Approve
         </button>
       </mat-card-actions>
     </mat-card>

@@ -33,13 +33,14 @@ export class FormsComponent implements OnInit {
     this.getAllDocuments();
   }
 
-  getAllDocuments() {
-    this.web.webServiceRetrieve<StoredDocument[]>(this.apiUrl).subscribe({
-      next: (data: any) => {
-          const formattedData = data.map((item: any, index: number) => ({
-            ...item,
-            position: index + 1
-          }));
+getAllDocuments() {
+  this.web.webServiceRetrieve<StoredDocument[]>(this.apiUrl).subscribe({
+    next: (data: any) => {
+      const formattedData = data.map((item: any, index: number) => ({
+        ...item,
+        name: decodeURIComponent(item.name),
+        position: index + 1
+      }));
       this.dataSource = new MatTableDataSource(formattedData);
 
       this.dataSource.paginator = this.paginator;
@@ -50,10 +51,17 @@ export class FormsComponent implements OnInit {
         const name = data.name?.toLowerCase() || '';
         return name.includes(searchString);
       };
-      },
-      error: (err) => console.error('Error fetching documents:', err)
-    });
-  }
+
+      this.dataSource.data.forEach((entry: any) => {
+        if(entry.employeeId === null){
+          this.onDelete(entry, true);
+        }
+      });
+      console.log(this.dataSource.data)
+    },
+    error: (err) => console.error('Error fetching documents:', err)
+  });
+}
 
    applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -64,14 +72,23 @@ export class FormsComponent implements OnInit {
       }
     }
 
-  onDelete(element: any) {
-    if (confirm(`Are you sure you want to delete ${element.originalName}?`)) {
+  onDelete(element: any, auto: boolean) {
+    if(auto){
       this.web.webServiceDelete(`${this.apiUrl}/${element._id}`, {}).subscribe({
         next: () => {
           this.getAllDocuments();
         },
         error: (error) => console.error(error)
       });
+    } else {
+        if (confirm(`Are you sure you want to delete ${element.originalName}?`)) {
+        this.web.webServiceDelete(`${this.apiUrl}/${element._id}`, {}).subscribe({
+          next: () => {
+            this.getAllDocuments();
+          },
+          error: (error) => console.error(error)
+        });
+      }
     }
   }
 

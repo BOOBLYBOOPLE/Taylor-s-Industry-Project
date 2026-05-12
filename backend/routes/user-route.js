@@ -7,6 +7,15 @@ const Employee = require('../schema/employee');
 const router = express.Router();
 const auth = require('../middleware/auth');
 
+const broadcastUserList = async () => {
+  try {
+    const allUsers = await User.find({}, 'username _id');
+    io.emit('user list', allUsers);
+  } catch (err) {
+    console.error("Error broadcasting user list:", err);
+  }
+};
+
 router.post('/register', async (req, res) => {
     try{
         const userreq = new user(req.body);
@@ -16,7 +25,7 @@ router.post('/register', async (req, res) => {
     catch(err){
         res.status(400).json({ error: err.message });
     }
-})
+});
 
 router.post('/login', async(req, res) => {
     try{
@@ -51,15 +60,6 @@ router.post('/login', async(req, res) => {
         res.status(500).json({error: err.message});
     }
 });
-
-router.get('/profile', auth, (req, res) => {
-  res.json({ message: 'User view' });
-});
-
-router.get('/admin', auth, auth.adminOnly, (req, res) => {
-    res.json({ message: 'Admin dashboard' });
-  }
-);
 
 router.get('/all', auth, async(req, res) => {
     try{
@@ -104,6 +104,16 @@ router.post('/reset-password-direct', async (req, res) => {
         userDoc.password = newPassword;
         await userDoc.save();
         res.json({ message: 'Password updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try{
+        await user.findByIdAndDelete(req.params.id);
+        broadcastUserList();
+        
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

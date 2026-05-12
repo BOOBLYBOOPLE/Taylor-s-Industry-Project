@@ -34,7 +34,7 @@ export class LeavesViewComponent implements OnInit {
       const id = this.leaveData._id;
       this.web.webServiceUpdate(`${this.apiUrl}/leaves/${id}`, { status: newStatus }).subscribe({
         next: () => {
-          this.leaveData.status = newStatus; // Update UI immediately
+          this.leaveData.status = newStatus;
         },
         error: (err) => console.error(err)
       });

@@ -20,31 +20,33 @@ export class ViewComplaintComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getInfo();
+  }
+
+  getInfo(){
     const id = this.route.snapshot.paramMap.get('id');
-
-    if (id) {
-      this.web.webServiceRetrieve(`${this.apiUrl}/complaints/${id}`).subscribe({
-        next: (data: any) => {
-          this.complaint = data;
-        },
-        error: (err) => console.error(err)
-      });
-    }
+    this.web.webServiceRetrieve(`${this.apiUrl}/complaints/${id}`).subscribe({
+      next: (data: any) => {
+        this.complaint = data;
+      },
+      error: (err) => console.error(err)
+    });
   }
 
-  markAsResolved() {
-    if (this.complaint && !this.complaint.resolved) {
-      const id = this.complaint._id;
-      // Sends { resolved: true } to the PUT route we created earlier
-      this.web.webServiceUpdate(`${this.apiUrl}/complaints/${id}`, { resolved: true }).subscribe({
-        next: (response) => {
-          // Update the local object immediately to reflect changes in the UI
-          this.complaint.resolved = true;
-        },
-        error: (err) => console.error('Error resolving complaint:', err)
-      });
-    }
+markAsResolved() {
+  if (this.complaint && !this.complaint.resolved) {
+    const id = this.route.snapshot.paramMap.get('id');
+    const updateData = { resolved: true };
+
+    this.web.webServiceUpdate(`${this.apiUrl}/complaints/${id}`, updateData).subscribe({
+      next: () => {
+        console.log('updated');
+        this.router.navigate(['/complaints']);
+      },
+      error: (error: any) => console.error('Error resolving complaint:', error)
+    });
   }
+}
 
   goBack() {
     this.router.navigate(['/complaints']);

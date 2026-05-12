@@ -28,14 +28,21 @@ export class LeavesComponent implements OnInit {
 
   loadLeaves() {
     this.web.webServiceRetrieve<leavesDataModel[]>(`${this.apiUrl}/leaves`).subscribe({
-        next: (data) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          console.log('Leaves loaded:', data);
-        },
-        error: (err) => console.error('Error loading leaves:', err)
-      });
+      next: (data) => {
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        this.dataSource.data.forEach((entry: any) => {
+          if(entry.employeeId === null){
+            this.onDelete(entry, true);
+          }
+        });
+
+        console.log('Leaves loaded:', data);
+      },
+      error: (err) => console.error('Error loading leaves:', err)
+    });
   }
 
   applyFilter(event: Event) {
@@ -59,13 +66,26 @@ export class LeavesComponent implements OnInit {
     });
   }
 
-  onDelete(element: any) {
-    const id = element._id;
-      this.web.webServiceDelete(`${this.apiUrl}/leaves/${id}`, {}).subscribe({
-        next: () => {
-          this.loadLeaves();
-        },
-        error: (error) => console.error(error)
-      });
+onDelete(element: any, auto: boolean) {
+  const id = element._id;
+  if(auto){
+    this.web.webServiceDelete(`${this.apiUrl}/leaves/${id}`, {}).subscribe({
+      next: () => {
+        console.log('delete employee entry removed');
+        this.loadLeaves();
+      },
+      error: (error) => console.error(error)
+    });
+  } else {
+      if(confirm('Are you sure you want to delete this entry?')){
+        this.web.webServiceDelete(`${this.apiUrl}/leaves/${id}`, {}).subscribe({
+          next: () => {
+            console.log('entry deleted');
+            this.loadLeaves();
+          },
+          error: (error) => console.error(error)
+        });
+      }
     }
+  }
 }

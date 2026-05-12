@@ -55,7 +55,7 @@ export class AttendanceComponent implements AfterViewInit ,OnInit {
 
         const mergedData = employees.map(emp => {
           const record = todaysAttendance.find((att: any) =>
-            (att.employeeId._id === emp._id) || (att.employeeId === emp._id)
+            (att.employeeId && att.employeeId._id === emp._id) || (att.employeeId === emp._id)
           );
 
           return {

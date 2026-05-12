@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Employee = require('../schema/employee');
 const User = require('../schema/user');
+const { AttendanceList } = require('../schema/attendance');
 
 router.get('/', async (req, res) => {
   try {
@@ -42,9 +43,13 @@ router.delete('/:id', async (req, res) => {
     await Employee.findByIdAndDelete(req.params.id);
     res.json({ message: 'Employee deleted' });
 
-    await createUser.findByIdAndDelete(req.params.id);
-    res.json({ message: 'User deleted' });
+    await AttendanceList.deleteMany({ employeeId: req.params.id });
 
+    if(!employee){
+      return res.json(404).json({ message: 'Not Fount' });
+    }
+
+    return res.json({ message: 'Employee and related records deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

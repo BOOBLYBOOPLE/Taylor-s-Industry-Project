@@ -58,9 +58,10 @@ export class ChatComponent implements OnInit {
       });
     });
 
-    this.socket.on('user list', (userList: string[]) => {
-      this.users = userList;
+    this.socket.on('user list', (userList: any[]) => {
+      this.users = userList.filter(u => u._id !== this.currentUser._id);
     });
+
 
     this.socket.on('typing', (username: string) => {
       this.typingUsers.add(username);
