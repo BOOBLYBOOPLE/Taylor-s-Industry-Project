@@ -38,7 +38,7 @@
           <span>{{displayedColumns.finance}}</span>
         </button>
       </mat-expansion-panel> -->
-      <button class="md-button" mat-list-item routerLink="/payroll" (click)="changeTitle(displayedColumns.payroll)">
+      <button class="md-button" *ngIf="isAdmin" mat-list-item routerLink="/payroll" (click)="changeTitle(displayedColumns.payroll)">
         <i class="fa fa-credit-card"></i>
         <span>{{displayedColumns.payroll}}</span>
       </button>

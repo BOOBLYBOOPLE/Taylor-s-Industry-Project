@@ -6,7 +6,7 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <button class="ms-2 button-content" routerLink="add-employee" >
+    <button class="ms-2 button-content" *ngIf="isAdmin" routerLink="add-employee" >
       <i class="fa fa-add"></i>Add
     </button>
   </div>
