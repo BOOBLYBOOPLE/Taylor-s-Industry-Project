@@ -20,7 +20,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors:{
-    origin: "http://localhost:4200",
+    origin: [
+      "http://localhost:4200",
+      "tay2u.online",
+      "https://www.yourdomain.com"
+    ],
     methods: ["GET", "POST"]
   }
 });
