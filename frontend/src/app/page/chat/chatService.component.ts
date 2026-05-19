@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -13,7 +14,7 @@ export class ChatService {
   unreadCounts$ = this.unreadCounts.asObservable();
 
   constructor() {
-    this.socket = io('http://localhost:5000');
+    this.socket = io(environment.apiUrl);
     this.setupNotificationListener();
   }
 
