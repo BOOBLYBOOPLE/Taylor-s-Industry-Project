@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'tay2u.online'
+  apiUrl: 'https://api.tay2u.online' 
 };
