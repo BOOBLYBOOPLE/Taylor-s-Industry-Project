@@ -22,8 +22,8 @@ const io = new Server(server, {
   cors:{
     origin: [
       "http://localhost:4200",
-      "tay2u.online",
-      "https://www.yourdomain.com"
+      'https://tay2u.online',
+      'https://www.tay2u.online'
     ],
     methods: ["GET", "POST"]
   }
