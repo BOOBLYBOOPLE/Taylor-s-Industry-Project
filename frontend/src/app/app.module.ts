@@ -79,6 +79,7 @@ import { EmailViewComponent } from './page/email/email-view/email-view.component
 import { PayrollFinanceAddComponent } from './page/payroll-finance/payroll-finance-add/payroll-finance-add.component';
 import { NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AnalyticsGraphComponent } from './page/analytics/analytics-graph/analytics-graph.component';
+import { ApiInterceptor } from './api.interceptor.ts';
 
 @NgModule({
   declarations: [
@@ -170,6 +171,11 @@ import { AnalyticsGraphComponent } from './page/analytics/analytics-graph/analyt
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
       multi: true
     }
   ],
